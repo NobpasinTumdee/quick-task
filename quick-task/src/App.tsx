@@ -5,6 +5,7 @@ import Home from './page/Home';
 import Todo from './page/Todo';
 import Task from './page/Task';
 import Finance from './page/Finance';
+import Login from './page/Login';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "todo-list", element: <Todo /> },
       { path: "task", element: <Task /> },
       { path: "finance", element: <Finance /> },
+      { path: "login", element: <Login /> },
     ]
   }
 ]);
