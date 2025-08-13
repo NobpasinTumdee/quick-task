@@ -1,10 +1,29 @@
-import './App.css'
+import { createBrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom';
+import Rootlayout from './layout/Layout';
+import Home from './page/Home';
+import Todo from './page/Todo';
+import Task from './page/Task';
+import Finance from './page/Finance';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Rootlayout />,
+    errorElement: <h1 style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Not found this page...</h1>,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "todo-list", element: <Todo /> },
+      { path: "task", element: <Task /> },
+      { path: "finance", element: <Finance /> },
+    ]
+  }
+]);
 
 function App() {
-
   return (
     <>
-      <h1>Quick Task</h1>
+      <RouterProvider router={router} />
     </>
   )
 }
