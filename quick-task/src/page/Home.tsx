@@ -1,17 +1,25 @@
-// src/components/Home.tsx (โค้ดที่แก้ไขแล้ว)
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import { useNavigate } from "react-router-dom";
+import type { Profile } from "../interface";
 import '../App.css'
+
 
 const Home = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState<any>(null);
-    const [fullName, setFullName] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [age, setAge] = useState('');
-    const [avatarUrl, setAvatarUrl] = useState('');
+    const [userProfile, setUserProfile] = useState<Profile | null>(null);
     const [uploading, setUploading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState<Profile>({
+        id: '',
+        full_name: '',
+        first_name: '',
+        last_name: '',
+        nickname: '',
+        age: 0,
+        avatar_url: '',
+    });
 
     useEffect(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -19,13 +27,9 @@ const Home = () => {
                 console.log(`Auth event: ${event}`);
                 if (session) {
                     setUser(session.user);
-                } else {
-                    console.log('please login');
-                    navigate('/login');
                 }
             }
         );
-
         return () => {
             authListener.subscription.unsubscribe();
         };
@@ -43,20 +47,21 @@ const Home = () => {
             // ... (โค้ด getProfile เหมือนเดิม)
             const { data, error, status } = await supabase
                 .from('profiles')
-                .select(`full_name, nickname, age, avatar_url`)
+                .select(`*`)
                 .eq('id', user.id)
                 .single();
 
             if (error && status !== 406) {
                 throw error;
             }
-
+            // console.table(data);
             if (data) {
-                setFullName(data.full_name);
-                setNickname(data.nickname);
-                setAge(data.age);
-                setAvatarUrl(data.avatar_url);
+                setUserProfile(data);
+                setFormData(data);
+                setLoading(false);
             }
+
+
         } catch (error: any) {
             console.error('Error fetching profile:', error.message);
         }
@@ -93,7 +98,7 @@ const Home = () => {
                 .getPublicUrl(filePath);
 
             // 3. นำ URL ที่ได้ไปตั้งค่า state
-            setAvatarUrl(data.publicUrl);
+            setFormData({ ...formData, avatar_url: data.publicUrl });
             await updateProfile();
 
         } catch (error: any) {
@@ -107,10 +112,12 @@ const Home = () => {
         try {
             const updates = {
                 id: user.id,
-                full_name: fullName,
-                nickname: nickname,
-                age: age,
-                avatar_url: avatarUrl,
+                full_name: formData.full_name,
+                first_name: formData.first_name,
+                last_name: formData.last_name,
+                nickname: formData.nickname,
+                age: formData.age,
+                avatar_url: formData.avatar_url,
             };
 
             const { error } = await supabase
@@ -136,56 +143,80 @@ const Home = () => {
         <>
             <h1>Home</h1>
             <div>
-                <h1>ยินดีต้อนรับ {fullName}!</h1>
+                <h1>ยินดีต้อนรับ {userProfile?.full_name}!</h1>
                 <p>gmail : {user.email}</p>
                 <p>ID: {user.id}</p>
                 <p>คุณได้เข้าถึงหน้า Protected Page แล้ว</p>
             </div>
             <div>
                 <h2>ข้อมูลส่วนตัว</h2>
-                {avatarUrl && (
-                    <img src={avatarUrl} alt="Avatar" style={{ width: '150px', borderRadius: '50%' }} />
+                {loading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <>
+                        {userProfile?.avatar_url && (
+                            <img src={userProfile?.avatar_url} alt="Avatar" style={{ width: '150px', borderRadius: '50%' }} />
+                        )}
+                        <div>
+                            <label htmlFor="avatar">รูปโปรไฟล์</label>
+                            <input
+                                type="file"
+                                id="avatar"
+                                accept="image/*"
+                                onChange={uploadAvatar}
+                                disabled={uploading}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="fullName">ชื่อจริง</label>
+                            <input
+                                id="fullName"
+                                type="text"
+                                value={formData.full_name || ''}
+                                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="firstName">ชื่อ</label>
+                            <input
+                                id="firstName"
+                                type="text"
+                                value={formData.first_name || ''}
+                                onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="lastName">นามสกุล</label>
+                            <input
+                                id="lastName"
+                                type="text"
+                                value={formData.last_name || ''}
+                                onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="nickname">ชื่อเล่น</label>
+                            <input
+                                id="nickname"
+                                type="text"
+                                value={formData.nickname || ''}
+                                onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="age">อายุ</label>
+                            <input
+                                id="age"
+                                type="number"
+                                value={formData.age || ''}
+                                onChange={(e) => setFormData({ ...formData, age: Number(e.target.value) })}
+                            />
+                        </div>
+                        <button onClick={updateProfile} disabled={uploading}>
+                            {uploading ? 'กำลังอัปโหลด...' : 'บันทึกข้อมูล'}
+                        </button>
+                    </>
                 )}
-                <div>
-                    <label htmlFor="avatar">รูปโปรไฟล์</label>
-                    <input
-                        type="file"
-                        id="avatar"
-                        accept="image/*"
-                        onChange={uploadAvatar}
-                        disabled={uploading}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="fullName">ชื่อจริง</label>
-                    <input
-                        id="fullName"
-                        type="text"
-                        value={fullName || ''}
-                        onChange={(e) => setFullName(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="nickname">ชื่อเล่น</label>
-                    <input
-                        id="nickname"
-                        type="text"
-                        value={nickname || ''}
-                        onChange={(e) => setNickname(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="age">อายุ</label>
-                    <input
-                        id="age"
-                        type="number"
-                        value={age || ''}
-                        onChange={(e) => setAge(e.target.value)}
-                    />
-                </div>
-                <button onClick={updateProfile} disabled={uploading}>
-                    {uploading ? 'กำลังอัปโหลด...' : 'บันทึกข้อมูล'}
-                </button>
             </div>
         </>
     );
