@@ -10,7 +10,7 @@ const Me = () => {
     const [userProfile, setUserProfile] = useState<Profile | null>(null);
     const [uploading, setUploading] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [Popup, setPopup] = useState(true);
+    const [Popup, setPopup] = useState(false);
     const [formData, setFormData] = useState<Profile>({
         id: '',
         full_name: '',

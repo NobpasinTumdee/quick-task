@@ -85,14 +85,7 @@
     margin-bottom: 15px;
 }
 
-label {
-    font-weight: 500;
-    margin-bottom: 6px;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="file"] {
+.form-group input {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -101,11 +94,14 @@ input[type="file"] {
     transition: all 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="file"]:focus {
+.form-group input:focus {
     border-color: #4a90e2;
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 6px;
 }
 
 .submit-btn {
