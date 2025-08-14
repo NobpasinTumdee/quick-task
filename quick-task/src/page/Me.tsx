@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import type { Profile } from "../interface";
 import '../App.css'
+import './style/page.css'
 
 
 const Me = () => {
@@ -9,6 +10,7 @@ const Me = () => {
     const [userProfile, setUserProfile] = useState<Profile | null>(null);
     const [uploading, setUploading] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [Popup, setPopup] = useState(true);
     const [formData, setFormData] = useState<Profile>({
         id: '',
         full_name: '',
@@ -127,6 +129,7 @@ const Me = () => {
             }
 
             alert('อัปเดตข้อมูลสำเร็จ!');
+            getProfile();
         } catch (error: any) {
             console.error('Error updating profile:', error.message);
         }
@@ -139,82 +142,125 @@ const Me = () => {
 
     return (
         <>
-            <h1>Home</h1>
-            <div>
-                <h1>ยินดีต้อนรับ {userProfile?.full_name}!</h1>
-                <p>gmail : {user.email}</p>
-                <p>ID: {user.id}</p>
-                <p>คุณได้เข้าถึงหน้า Protected Page แล้ว</p>
-            </div>
-            <div>
-                <h2>ข้อมูลส่วนตัว</h2>
-                {loading ? (
-                    <p>Loading...</p>
-                ) : (
-                    <>
-                        {userProfile?.avatar_url && (
-                            <img src={userProfile?.avatar_url} alt="Avatar" style={{ width: '150px', borderRadius: '50%' }} />
-                        )}
-                        <div>
-                            <label htmlFor="avatar">รูปโปรไฟล์</label>
-                            <input
-                                type="file"
-                                id="avatar"
-                                accept="image/*"
-                                onChange={uploadAvatar}
-                                disabled={uploading}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="fullName">ชื่อจริง</label>
-                            <input
-                                id="fullName"
-                                type="text"
-                                value={formData.full_name || ''}
-                                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="firstName">ชื่อ</label>
-                            <input
-                                id="firstName"
-                                type="text"
-                                value={formData.first_name || ''}
-                                onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="lastName">นามสกุล</label>
-                            <input
-                                id="lastName"
-                                type="text"
-                                value={formData.last_name || ''}
-                                onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="nickname">ชื่อเล่น</label>
-                            <input
-                                id="nickname"
-                                type="text"
-                                value={formData.nickname || ''}
-                                onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="age">อายุ</label>
-                            <input
-                                id="age"
-                                type="number"
-                                value={formData.age || ''}
-                                onChange={(e) => setFormData({ ...formData, age: Number(e.target.value) })}
-                            />
-                        </div>
-                        <button onClick={updateProfile} disabled={uploading}>
-                            {uploading ? 'กำลังอัปโหลด...' : 'บันทึกข้อมูล'}
-                        </button>
-                    </>
-                )}
+            <div className="me-container">
+                <div className="background-me" >
+                    {userProfile?.avatar_url ? (
+                        <img src={userProfile?.avatar_url} alt="Avatar" className="avatar-me" />
+                    ) : (
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Avatar" className="avatar-me" />
+                    )}
+                </div>
+                <div className="me-welcome">
+                    {loading ? (
+                        <h1 style={{ textAlign: 'center' }}>Loading...</h1>
+                    ) : (
+                        <>
+                            <h1>Welcome✨ {userProfile?.full_name} ({userProfile?.nickname})</h1>
+                            <p>ID: {user.id}</p>
+                            <p>Full Name : {userProfile?.full_name}</p>
+                            <p>Name : {userProfile?.first_name} {userProfile?.last_name}</p>
+                            <p>gmail : {user.email}</p>
+                            <p>Age : {userProfile?.age}</p>
+                            <h2 className="edit-profile" onClick={() => setPopup(!Popup)}>Edit profile</h2>
+                        </>
+                    )}
+                </div>
+
+                <div className="me-form">
+                    {loading ? (
+                        <h2 style={{ textAlign: 'center' }}>Loading...</h2>
+                    ) : (
+                        <>
+                            {Popup &&
+                                <>
+                                    <div className="overlay" onClick={() => setPopup(!Popup)} />
+                                    <div className="form-container">
+                                        <h2 className="form-title">Edit profile</h2>
+
+                                        <div className="form-group">
+                                            <label htmlFor="avatar">Avatar</label>
+                                            <input
+                                                type="file"
+                                                id="avatar"
+                                                accept="image/*"
+                                                onChange={uploadAvatar}
+                                                disabled={uploading}
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="fullName">Full Name</label>
+                                            <input
+                                                id="fullName"
+                                                type="text"
+                                                value={formData.full_name || ""}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, full_name: e.target.value })
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="firstName">First Name</label>
+                                            <input
+                                                id="firstName"
+                                                type="text"
+                                                value={formData.first_name || ""}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, first_name: e.target.value })
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="lastName">Last Name</label>
+                                            <input
+                                                id="lastName"
+                                                type="text"
+                                                value={formData.last_name || ""}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, last_name: e.target.value })
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="nickname">ชื่อเล่น</label>
+                                            <input
+                                                id="nickname"
+                                                type="text"
+                                                value={formData.nickname || ""}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, nickname: e.target.value })
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="age">อายุ</label>
+                                            <input
+                                                id="age"
+                                                type="number"
+                                                value={formData.age || ""}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, age: Number(e.target.value) })
+                                                }
+                                            />
+                                        </div>
+
+                                        <button
+                                            className="submit-btn"
+                                            onClick={updateProfile}
+                                            disabled={uploading}
+                                        >
+                                            {uploading ? "กำลังอัปโหลด..." : "บันทึกข้อมูล"}
+                                        </button>
+                                    </div>
+                                </>
+                            }
+                        </>
+                    )}
+                </div>
             </div>
         </>
     );
