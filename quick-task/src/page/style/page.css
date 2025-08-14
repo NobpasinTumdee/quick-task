@@ -34,7 +34,7 @@
     margin: 0 5%;
 }
 
-.me-welcome p{
+.me-welcome p {
     opacity: 0.9;
     font-weight: 100;
 }
@@ -44,14 +44,9 @@
 }
 
 .form-container {
-    position: fixed;
-    top: 5%;
-    right: 1%;
-    max-width: 400px;
-    margin: 30px auto;
-    background: #1f1f1f;
-    color: #fff;
-    padding: 20px 25px;
+    margin: 0 0 20%;
+    background-color: #1d1d1d;
+    padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
@@ -126,4 +121,27 @@ label {
 .submit-btn:disabled {
     background: #aaa;
     cursor: not-allowed;
+}
+
+@media screen and (max-width: 450px) {
+    .me-container {
+        margin: 0;
+        width: 100vw;
+    }
+
+    .me-welcome {
+        margin: 0 5%;
+    }
+
+    .me-welcome h1 {
+        font-size: 1.4rem;
+    }
+
+    .me-welcome p {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        font-weight: 100;
+    }
+
+    .form-container {}
 }

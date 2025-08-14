@@ -1,0 +1,94 @@
+.nav-container {
+    position: fixed;
+    bottom: 10px;
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.nav-container ul {
+    display: flex;
+    width: auto;
+    background-color: #222;
+    border-radius: 20px;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+.nav-container ul li {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    list-style: none;
+    z-index: 10;
+}
+
+.nav-container ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.nav-container ul li a .icon-nav {
+    position: relative;
+    display: block;
+    line-height: 75px;
+    font-size: 1.5em;
+    filter: invert(1);
+    text-align: center;
+    transition: 0.5s;
+}
+
+.nav-container ul li.active a .icon-nav {
+    transform: translateY(-32px) scale(1.2);
+    filter: invert(0);
+}
+
+.nav-container ul li a .text-nav {
+    position: absolute;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.nav-container ul li:hover a .text-nav {
+    opacity: 1;
+    transform: translateY(15px);
+}
+
+.nav-container ul li.active a .text-nav {
+    opacity: 1;
+    transform: translateY(10px);
+}
+
+.nav-container ul li a .circle {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    top: 0;
+    left: 20px;
+    transition: 0.5s ease-in-out;
+    transform: translate(15px, 40px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.nav-container ul li.active a .circle {
+    background: #fff;
+    width: 50px;
+    height: 50px;
+    transform: translate(-10px, -27px);
+}

@@ -51,6 +51,10 @@ const Me = () => {
                 .eq('id', user.id)
                 .single();
 
+            if (status === 406) {
+                setLoading(false);
+                return;
+            }
             if (error && status !== 406) {
                 throw error;
             }
@@ -97,9 +101,11 @@ const Me = () => {
                 .from('avatars')
                 .getPublicUrl(filePath);
 
+            // console.log(data.publicUrl);
+            await AvataUpdatePicture(data.publicUrl);
+
             // 3. นำ URL ที่ได้ไปตั้งค่า state
             setFormData({ ...formData, avatar_url: data.publicUrl });
-            await updateProfile();
 
         } catch (error: any) {
             console.error('Error uploading avatar:', error.message);
@@ -107,6 +113,24 @@ const Me = () => {
             setUploading(false);
         }
     };
+
+    const AvataUpdatePicture = async (url: string) => {
+        // console.log(url);
+        try {
+            const { error } = await supabase
+                .from('profiles')
+                .update({ avatar_url: url })
+                .eq('id', user.id)
+
+            if (error) {
+                throw error;
+            }
+            await getProfile();
+            alert('อัปเดตข้อมูลสำเร็จ!');
+        } catch (error:any) {
+            console.error('Error updating profile:', error.message);
+        }
+    }
 
     const updateProfile = async () => {
         try {
@@ -129,7 +153,7 @@ const Me = () => {
             }
 
             alert('อัปเดตข้อมูลสำเร็จ!');
-            getProfile();
+            await getProfile();
         } catch (error: any) {
             console.error('Error updating profile:', error.message);
         }
@@ -137,7 +161,7 @@ const Me = () => {
 
 
     if (!user) {
-        return <div>กำลังตรวจสอบสิทธิ์...</div>;
+        return <h1 style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>กำลังตรวจสอบสิทธิ์...</h1>;
     }
 
     return (
@@ -155,12 +179,12 @@ const Me = () => {
                         <h1 style={{ textAlign: 'center' }}>Loading...</h1>
                     ) : (
                         <>
-                            <h1>Welcome✨ {userProfile?.full_name} ({userProfile?.nickname})</h1>
+                            <h1>Welcome✨ {userProfile?.full_name || 'unknown'} ({userProfile?.nickname || 'unknown'})</h1>
                             <p>ID: {user.id}</p>
-                            <p>Full Name : {userProfile?.full_name}</p>
-                            <p>Name : {userProfile?.first_name} {userProfile?.last_name}</p>
+                            <p>Full Name : {userProfile?.full_name || 'unknown'}</p>
+                            <p>Name : {userProfile?.first_name || 'unknown first name'} {userProfile?.last_name || 'unknown last name'}</p>
                             <p>gmail : {user.email}</p>
-                            <p>Age : {userProfile?.age}</p>
+                            <p>Age : {userProfile?.age || 'unknown'}</p>
                             <h2 className="edit-profile" onClick={() => setPopup(!Popup)}>Edit profile</h2>
                         </>
                     )}
@@ -173,10 +197,10 @@ const Me = () => {
                         <>
                             {Popup &&
                                 <>
-                                    <div className="overlay" onClick={() => setPopup(!Popup)} />
+                                    {/* <div className="overlay" onClick={() => setPopup(!Popup)} /> */}
                                     <div className="form-container">
                                         <h2 className="form-title">Edit profile</h2>
-
+                                        <img src={userProfile?.avatar_url} width={50} height={50} alt="" />
                                         <div className="form-group">
                                             <label htmlFor="avatar">Avatar</label>
                                             <input
