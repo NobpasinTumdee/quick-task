@@ -92,3 +92,14 @@
     height: 50px;
     transform: translate(-10px, -27px);
 }
+
+@media screen and (max-width: 450px) {
+    .nav-container ul {
+        scale: 0.75;
+    }
+}
+@media screen and (max-width: 400px) {
+    .nav-container ul {
+        scale: 0.6;
+    }
+}
