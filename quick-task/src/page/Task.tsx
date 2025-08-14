@@ -68,6 +68,10 @@ const Task = () => {
 
     const InsertTask = async (event: any) => {
         event.preventDefault();
+        if (!taskForm.status_id) {
+            alert("กรุณาเลือกสถานะ");
+            return;
+        }
         try {
             // console.table(taskForm);
             const { error } = await supabase
@@ -81,6 +85,26 @@ const Task = () => {
             console.error('Error inserting task:', error.message);
         }
     }
+
+    const UpdateTask = async (id: string) => {
+        if (!id) {
+            console.error('Error updating task: id is null or undefined');
+            return;
+        }
+        try {
+            const { error } = await supabase
+                .from('task')
+                .update({ status_id: '06d3ed01-58e0-4535-97a3-779e846b4fe5' })
+                .eq('id', id);
+            if (error) {
+                throw error;
+            }
+            await getTask();
+        } catch (error: any) {
+            console.error('Error updating task:', error.message);
+        }
+    }
+
 
     const DeleteTask = async (id: string) => {
         if (!id) {
@@ -139,6 +163,7 @@ const Task = () => {
                     <input type="date" onChange={(e) => setTaskForm({ ...taskForm, start_date: new Date(e.target.value) })} />
                     <input type="date" onChange={(e) => setTaskForm({ ...taskForm, end_date: new Date(e.target.value) })} />
                     <select name="status" id="status" onChange={(e) => setTaskForm({ ...taskForm, status_id: e.target.value })}>
+                        <option value="">-- change status --</option>
                         {statusTask.map((item, index) => (
                             <option key={index} value={item.id}>{item.status_name}</option>
                         ))}
@@ -157,6 +182,7 @@ const Task = () => {
                             <th>end</th>
                             <th>status</th>
                             <th>action</th>
+                            <th>delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,6 +194,7 @@ const Task = () => {
                                 <td>{String(item.start_date)}</td>
                                 <td>{String(item.end_date)}</td>
                                 <td>{item.status_task?.status_name}</td>
+                                <td onClick={() => UpdateTask(String(item.id))}>Completed</td>
                                 <td onClick={() => DeleteTask(String(item.id))}>Delete Task</td>
                             </tr>
                         ))}
