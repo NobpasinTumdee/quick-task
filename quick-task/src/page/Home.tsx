@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
-import { useNavigate } from "react-router-dom";
 import type { Profile } from "../interface";
 import '../App.css'
 
 
 const Home = () => {
-    const navigate = useNavigate();
     const [user, setUser] = useState<any>(null);
     const [userProfile, setUserProfile] = useState<Profile | null>(null);
     const [uploading, setUploading] = useState(false);
@@ -22,20 +20,21 @@ const Home = () => {
     });
 
     useEffect(() => {
-        const { data: authListener } = supabase.auth.onAuthStateChange(
-            (event, session) => {
-                console.log(`Auth event: ${event}`);
-                if (session) {
-                    setUser(session.user);
-                }
-            }
-        );
-        return () => {
-            authListener.subscription.unsubscribe();
-        };
-    }, [navigate]);
+        handleUserInfo();
+    }, []);
 
-    // แก้ไข: useEffect ที่เรียก getProfile จะต้องมีเงื่อนไข user.id
+    const handleUserInfo = async () => {
+        try {
+            const { data: { user: userFromSupabase } } = await supabase.auth.getUser()
+            // console.table(userFromSupabase);
+            if (userFromSupabase) {
+                setUser(userFromSupabase);
+            }
+        } catch (error) {
+            console.error("Error getting user:", error);
+        }
+    }
+
     useEffect(() => {
         if (user) {
             getProfile();
@@ -44,7 +43,6 @@ const Home = () => {
 
     const getProfile = async () => {
         try {
-            // ... (โค้ด getProfile เหมือนเดิม)
             const { data, error, status } = await supabase
                 .from('profiles')
                 .select(`*`)

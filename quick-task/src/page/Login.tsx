@@ -23,6 +23,21 @@ const Login = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            const { error } = await supabase.auth.signOut()
+            if (error) {
+                console.error("Logout error:", error.message);
+            } else {
+                alert('ออกจากระบบสำเร็จ!');
+            }
+        } catch (error) {
+            alert('error' + error);
+        }
+
+
+    }
+
     return (
         <div>
             <h2>Signup / Login</h2>
@@ -40,6 +55,7 @@ const Login = () => {
             />
             <button onClick={handleSignup}>Sign Up</button>
             <button onClick={handleLogin}>Log In</button>
+            <button onClick={handleLogout}>Log Out</button>
         </div>
     );
 };

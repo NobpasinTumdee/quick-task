@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <Rootlayout />,
     errorElement: <h1 style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Not found this page...</h1>,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <ProtectedRoute><Home /></ProtectedRoute> },
       { path: "todo-list", element: <ProtectedRoute><Todo /></ProtectedRoute> },
       { path: "task", element: <ProtectedRoute><Task /></ProtectedRoute> },
       { path: "finance", element: <ProtectedRoute><Finance /></ProtectedRoute> },
