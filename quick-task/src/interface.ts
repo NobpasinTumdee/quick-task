@@ -25,3 +25,11 @@ export type StatusTaskInterface = {
     status_name: string;
     description: string;
 };
+
+export type WalletInterface = {
+    id?: string;
+    name?: string;
+    balance?: number;
+    user_id?: string;
+    created_at?: Date;
+};

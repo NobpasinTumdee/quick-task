@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { supabase } from '../supabase/supabaseClient';
 import './style/Login.css'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,11 +18,13 @@ const Login = () => {
     };
 
     const handleLogin = async () => {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data , error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
             console.error("Login error:", error.message);
         } else {
             alert('เข้าสู่ระบบสำเร็จ!');
+            localStorage.setItem('user_id', data.user.id);
+            navigate("/");
         }
     };
 

@@ -41,8 +41,8 @@ const Nav = () => {
                             <span className="circle"></span>
                         </Link>
                     </li>
-                    <li className={`list-nav ${isActive('/finance') ? 'active' : ''}`}>
-                        <Link to="/finance">
+                    <li className={`list-nav ${isActive('/wallet') ? 'active' : ''}`}>
+                        <Link to="/wallet">
                             <span className="icon-nav">
                                 <img src={cash} width={30} />
                             </span>

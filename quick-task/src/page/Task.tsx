@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "../supabase/supabaseClient"
 import type { StatusTaskInterface, TaskInterface } from "../interface";
 import './style/task.css'
-import Loader from "../component/loader";
+import Loader from "../component/Loader";
 
 const Task = () => {
     const [user, setUser] = useState<any>(null);
