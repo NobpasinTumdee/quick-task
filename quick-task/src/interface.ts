@@ -33,3 +33,20 @@ export type WalletInterface = {
     user_id?: string;
     created_at?: Date;
 };
+
+export type TransactionInterface = {
+    id?: string;
+    wallet_id?: string;
+    status_id?: number;
+    amount?: number;
+    description?: string;
+    type?: string;
+    transaction_date?: Date;
+
+    transaction_statuses?: TransactionStatusInterface;
+};
+
+export type TransactionStatusInterface = {
+    id?: string;
+    name?: string;
+};

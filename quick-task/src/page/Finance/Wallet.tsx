@@ -28,12 +28,14 @@ const Wallet = () => {
                 console.error("Error fetching wallet:", error);
                 return;
             }
-            if (wallets) { // ตรงนี้ผิดมาแก้ด้วย
-                // console.table(wallets);
+            if (wallets) {
                 setLoading(false);
                 setWallet(wallets);
+                // console.table(wallets);
+            }else {
+                setLoading(false);
+                setWallet([]);
             }
-
         } catch (error) {
             console.error("Error fetching wallet:", error);
         }
