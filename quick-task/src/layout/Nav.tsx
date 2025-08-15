@@ -70,6 +70,10 @@ const Nav = () => {
                     </li>
                 </ul>
             </div>
+            <div className="nav-container mobile-error">
+                <p>ไม่รองรับขนาดจอนี้</p>
+                <p>โปรดเปลี่ยนขนาดจอ</p>
+            </div>
         </>
     )
 }

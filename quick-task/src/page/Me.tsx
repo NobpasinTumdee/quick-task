@@ -286,6 +286,10 @@ const Me = () => {
                     )}
                 </div>
             </div>
+            <div className="me-container mobile-error">
+                <p>ไม่รองรับขนาดจอนี้</p>
+                <p>โปรดเปลี่ยนขนาดจอ หรืออุปกรณ์</p>
+            </div>
         </>
     );
 };
