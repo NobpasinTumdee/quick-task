@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../supabase/supabaseClient';
+import './style/Login.css'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -39,24 +40,43 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <h2>Signup / Login</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleSignup}>Sign Up</button>
-            <button onClick={handleLogin}>Log In</button>
-            <button onClick={handleLogout}>Log Out</button>
-        </div>
+        <>
+            <div className="auth-wrapper">
+                <div className="auth-card">
+                    <h2 className="auth-title">Welcome Back 👋</h2>
+                    <p className="auth-subtitle">Sign up or log in to continue</p>
+
+                    <div className="auth-input">
+                        <span className="auth-icon">📧</span>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="auth-input">
+                        <span className="auth-icon">🔒</span>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+
+                    <button className="btn-primary" onClick={handleLogin}>Log In</button>
+                    <button className="btn-outline" onClick={handleSignup}>Sign Up</button>
+                    <button className="btn-secondary" onClick={handleLogout}>Log Out</button>
+
+                    <p className="auth-footer">
+                        Don't have an account?{" "}
+                        <span className="auth-link">Create one</span>
+                    </p>
+                </div>
+            </div>
+        </>
     );
 };
 
