@@ -261,7 +261,39 @@ const Task = () => {
 
 
 
-                <div>
+                <div className="table-task">
+                    <table>
+                        <thead className="thead-task">
+                            <tr>
+                                <th>id</th>
+                                <th>task</th>
+                                <th>description</th>
+                                <th>start</th>
+                                <th>end</th>
+                                <th>status</th>
+                                <th>action</th>
+                                <th>delete</th>
+                            </tr>
+                        </thead>
+                        <tbody className="tbody-task">
+                            {task.filter((item) => !filterStatus || item.status_id === filterStatus)
+                                .map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.task_name}</td>
+                                        <td style={{ textAlign: 'left' }}>{item.task_description}</td>
+                                        <td>{String(item.start_date)}</td>
+                                        <td>{String(item.end_date)}</td>
+                                        <td>{item.status_task?.status_name}</td>
+                                        <td onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))} className="Done-task">Done</td>
+                                        <td onClick={() => DeleteTask(String(item.id))} className="remove-task">Remove Task</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div className="filter-status">
                     <select name="status-filter" id="" onChange={(e) => setFilterStatus(e.target.value)}>
                         <option value="" style={{ textAlign: 'center' }}>-- All --</option>
                         {statusTask.map((item, index) => (
@@ -269,36 +301,6 @@ const Task = () => {
                         ))}
                     </select>
                 </div>
-                <table className="table-task">
-                    <thead className="thead-task">
-                        <tr>
-                            <th>id</th>
-                            <th>task</th>
-                            <th>description</th>
-                            <th>start</th>
-                            <th>end</th>
-                            <th>status</th>
-                            <th>action</th>
-                            <th>delete</th>
-                        </tr>
-                    </thead>
-                    <tbody className="tbody-task">
-                        {task.filter((item) => !filterStatus || item.status_id === filterStatus)
-                            .map((item, index) => (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.task_name}</td>
-                                    <td>{item.task_description}</td>
-                                    <td>{String(item.start_date)}</td>
-                                    <td>{String(item.end_date)}</td>
-                                    <td>{item.status_task?.status_name}</td>
-                                    <td onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))}>Done</td>
-                                    <td onClick={() => DeleteTask(String(item.id))}>Remove Task</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
             </div>
         </>
     );

@@ -105,12 +105,42 @@
 
 
 
+.filter-status {
+    text-align: left;
+}
 
+.filter-status select {
+    background-color: var(--background-modal);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border: 1px solid var(--border-line);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-status option {
+    background-color: var(--background-modal);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border: 1px solid var(--border-line);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
 .table-task {
     width: 100%;
+    max-height: 300px;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
+.table-task table {
+    width: 100%;
+}
 
 .thead-task th {
     text-align: center;
@@ -118,8 +148,32 @@
     color: var(--text-main);
     font-weight: 700;
     font-size: 1.1rem;
-    border-right: 1px solid var(--border-line);
+    border-top: 1px solid var(--border-line);
+    border-bottom: 1px solid var(--border-line);
 }
+
+.tbody-task td {
+    text-align: center;
+    padding: 10px 0;
+    color: var(--text-main);
+    font-size: 1rem;
+    border: 1px solid var(--border-line);
+}
+
+.Done-task {
+    background-color: rgb(100, 52, 139);
+    border-radius: 20px;
+    border: 1px solid var(--border-line);
+    cursor: pointer;
+}
+
+.remove-task {
+    background-color: #500a0a;
+    border-radius: 20px;
+    border: 1px solid var(--border-line);
+    cursor: pointer;
+}
+
 
 
 
@@ -196,6 +250,14 @@
         grid-template-columns: 1fr;
         margin-bottom: 10%;
     }
+
+    .table-task {
+        width: 90%;
+        margin: 0 5%;
+        max-height: 300px;
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
 }
 
 @media screen and (max-width: 450px) {
@@ -214,5 +276,19 @@
     .content-task {
         margin: 0 0 50%;
         width: 100%;
+    }
+
+    .table-task th {
+        font-size: 0.6rem;
+        font-weight: 300;
+    }
+
+    .table-task td {
+        font-size: 0.6rem;
+        font-weight: 300;
+    }
+
+    .filter-status {
+        text-align: center;
     }
 }
