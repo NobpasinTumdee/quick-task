@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "../supabase/supabaseClient"
 import type { StatusTaskInterface, TaskInterface } from "../interface";
 import './style/task.css'
+import Loader from "../component/loader";
 
 const Task = () => {
     const [user, setUser] = useState<any>(null);
@@ -148,9 +149,11 @@ const Task = () => {
     }
     // --------------------- get status task ---------------------
 
-    if (!user) {
+    if (!user || task.length === 0 || statusTask.length === 0) {
         return (
-            <h1 style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>Loading...</h1>
+            <>
+                <Loader />
+            </>
         );
     }
 
@@ -212,43 +215,43 @@ const Task = () => {
                     }
 
                     <div className="task-column">
-                        <h3>Plan ({task.filter(item => item.status_id === statusTask[0].id).length})</h3>
+                        <h3>🟢 Plan ({task.filter(item => item.status_id === statusTask[0].id).length})</h3>
                         {task.filter(item => item.status_id === statusTask[0].id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
-                                    <p style={{margin: '0'}}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{margin: '0'}}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">description: <br />{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[1].id))}>Next Step</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[1].id))} className="next-step-task">Next Step</span>
                             </div>
                         ))}
                     </div>
 
                     <div className="task-column">
-                        <h3>In Progress ({task.filter(item => item.status_id === statusTask[1].id).length})</h3>
+                        <h3>🟡 In Progress ({task.filter(item => item.status_id === statusTask[1].id).length})</h3>
                         {task.filter(item => item.status_id === statusTask[1].id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
-                                    <p style={{margin: '0'}}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{margin: '0'}}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))}>Next Step</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))} className="next-step-task">Next Step</span>
                             </div>
                         ))}
                     </div>
 
                     <div className="task-column">
-                        <h3>Complete ({task.filter(item => item.status_id === statusTask[2].id).length})</h3>
+                        <h3>🟣 Complete ({task.filter(item => item.status_id === statusTask[2].id).length})</h3>
                         {task.filter(item => item.status_id === statusTask[2].id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
-                                    <p style={{margin: '0'}}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{margin: '0'}}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[0].id))}>Work Again</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[0].id))} className="next-step-task">Work Again</span>
                             </div>
                         ))}
                     </div>

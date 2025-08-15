@@ -3,7 +3,7 @@ import { supabase } from "../supabase/supabaseClient";
 import type { Profile } from "../interface";
 import '../App.css'
 import './style/page.css'
-
+import Loader from "../component/loader";
 
 const Me = () => {
     const [user, setUser] = useState<any>(null);
@@ -127,7 +127,7 @@ const Me = () => {
             }
             await getProfile();
             alert('อัปเดตข้อมูลสำเร็จ!');
-        } catch (error:any) {
+        } catch (error: any) {
             console.error('Error updating profile:', error.message);
         }
     }
@@ -161,7 +161,11 @@ const Me = () => {
 
 
     if (!user) {
-        return <h1 style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>กำลังตรวจสอบสิทธิ์...</h1>;
+        return (
+            <>
+                <Loader />
+            </>
+        );
     }
 
     return (
