@@ -5,47 +5,33 @@ import './style/task.css'
 import Loader from "../component/Loader";
 
 const Task = () => {
-    const [user, setUser] = useState<any>(null);
+    const user_id = localStorage.getItem('user_id');
+    // const [user, setUser] = useState<any>(null);
     const [task, setTask] = useState<TaskInterface[]>([]);
     const [popup, setPopup] = useState(false);
     const [statusTask, setStatusTask] = useState<StatusTaskInterface[]>([]);
     const [filterStatus, setFilterStatus] = useState('');
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
     const [taskForm, setTaskForm] = useState<TaskInterface>({
         task_name: '',
         task_description: '',
         start_date: new Date(),
         end_date: new Date(),
-        user_id: '',
+        user_id: String(user_id),
         status_id: ''
     });
 
     useEffect(() => {
-        handleSignup();
-    }, []);
-
-    useEffect(() => {
-        if (user) {
+        if (user_id) {
             getTask();
             getStatusTask();
         }
-    }, [user]);
+    }, [user_id]);
 
-    const handleSignup = async () => {
-        try {
-            const { data: { user: userFromSupabase } } = await supabase.auth.getUser();
-            if (userFromSupabase) {
-                // console.table(userFromSupabase);
-                setUser(userFromSupabase);
-                setTaskForm({ ...taskForm, user_id: userFromSupabase.id });
-            }
-        } catch (error) {
-            console.error("Error getting user:", error);
-        }
-    };
 
     const getTask = async () => {
-        if (!user) {
+        if (!user_id) {
             console.error('User not found');
             return;
         }
@@ -55,7 +41,7 @@ const Task = () => {
                 .select(`*,status_task (
                     status_name
                 )`)
-                .eq('user_id', user.id);
+                .eq('user_id', user_id);
 
             if (error && status !== 406) {
                 throw error;
@@ -69,6 +55,8 @@ const Task = () => {
                 setLoading(false);
             }
         } catch (error: any) {
+            alert(error.message);
+            setUploading(false);
             console.error('Error fetching task:', error.message);
         }
     };
@@ -80,15 +68,20 @@ const Task = () => {
             return;
         }
         try {
+            setUploading(true);
             // console.table(taskForm);
             const { error } = await supabase
                 .from('task')
                 .insert(taskForm);
             if (error) {
                 throw error;
+            } else {
+                setUploading(false);
             }
             await getTask();
         } catch (error: any) {
+            alert(error.message);
+            setUploading(false);
             console.error('Error inserting task:', error.message);
         }
     }
@@ -99,15 +92,20 @@ const Task = () => {
             return;
         }
         try {
+            setUploading(true);
             const { error } = await supabase
                 .from('task')
                 .update({ status_id: statusID })
                 .eq('id', id);
             if (error) {
                 throw error;
+            } else {
+                setUploading(false);
             }
             await getTask();
         } catch (error: any) {
+            alert(error.message);
+            setUploading(false);
             console.error('Error updating task:', error.message);
         }
     }
@@ -119,15 +117,20 @@ const Task = () => {
             return;
         }
         try {
+            setUploading(true);
             const { error } = await supabase
                 .from('task')
                 .delete()
                 .eq('id', id);
             if (error) {
                 throw error;
+            } else {
+                setUploading(false);
             }
             await getTask();
         } catch (error: any) {
+            alert(error.message);
+            setUploading(false);
             console.error('Error deleting task:', error.message);
         }
     }
@@ -152,7 +155,7 @@ const Task = () => {
     }
     // --------------------- get status task ---------------------
 
-    if (!user || loading) {
+    if (!user_id || loading) {
         return (
             <>
                 <Loader />
@@ -164,7 +167,7 @@ const Task = () => {
         <>
             <div className="header-task">
                 <h1>Task Manager</h1>
-                <p>{user.email}</p>
+                <p>{user_id}</p>
             </div>
             <div className="content-task">
                 <div className="menu-task">
@@ -206,55 +209,55 @@ const Task = () => {
                                     onChange={(e) => setTaskForm({ ...taskForm, status_id: e.target.value })}
                                 >
                                     <option value="">-- change status --</option>
-                                    {statusTask.map((item, index) => (
+                                    {statusTask?.map((item, index) => (
                                         <option key={index} value={item.id}>
                                             {item.status_name}
                                         </option>
                                     ))}
                                 </select>
-                                <button type="submit">Add</button>
+                                <button type="submit" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Uploading...' : 'Add'}</button>
                             </form>
                         </div>
                     }
 
                     <div className="task-column">
-                        <h3>🟢 Plan ({task.filter(item => item.status_id === statusTask[0].id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[0].id).map((item, index) => (
+                        <h3>🟢 Plan ({task.filter(item => item.status_id === statusTask[0]?.id).length})</h3>
+                        {task.filter(item => item.status_id === statusTask[0]?.id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
                                     <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                     <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">description: <br />{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[1].id))} className="next-step-task">Next Step</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[1]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Next Step'}</span>
                             </div>
                         ))}
                     </div>
 
                     <div className="task-column">
-                        <h3>🟡 In Progress ({task.filter(item => item.status_id === statusTask[1].id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[1].id).map((item, index) => (
+                        <h3>🟡 In Progress ({task.filter(item => item.status_id === statusTask[1]?.id).length})</h3>
+                        {task.filter(item => item.status_id === statusTask[1]?.id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
                                     <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                     <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))} className="next-step-task">Next Step</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Next Step'}</span>
                             </div>
                         ))}
                     </div>
 
                     <div className="task-column">
-                        <h3>🟣 Complete ({task.filter(item => item.status_id === statusTask[2].id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[2].id).map((item, index) => (
+                        <h3>🟣 Complete ({task.filter(item => item.status_id === statusTask[2]?.id).length})</h3>
+                        {task.filter(item => item.status_id === statusTask[2]?.id).map((item, index) => (
                             <div key={index} className="task-card">
                                 <div>
                                     <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                     <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
                                     <p className="task-description">{item.task_description}</p>
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[0].id))} className="next-step-task">Work Again</span>
+                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[0]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Work Again'}</span>
                             </div>
                         ))}
                     </div>
@@ -288,22 +291,24 @@ const Task = () => {
                                         <td>{String(item.start_date)}</td>
                                         <td>{String(item.end_date)}</td>
                                         <td>{item.status_task?.status_name}</td>
-                                        <td onClick={() => UpdateTask(String(item.id), String(statusTask[2].id))} className="Done-task">Done</td>
-                                        <td onClick={() => DeleteTask(String(item.id))} className="remove-task">Remove Task</td>
+                                        <td onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} className="Done-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Done'}</td>
+                                        <td onClick={() => DeleteTask(String(item.id))} className="remove-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Remove'}</td>
                                     </tr>
                                 ))
                             }
                         </tbody>
                     </table>
                 </div>
-                <div className="filter-status">
-                    <select name="status-filter" id="" onChange={(e) => setFilterStatus(e.target.value)}>
-                        <option value="" style={{ textAlign: 'center' }}>-- All --</option>
-                        {statusTask.map((item, index) => (
-                            <option key={index} value={item.id}>{item.status_name}-{item.description}</option>
-                        ))}
-                    </select>
-                </div>
+                {statusTask.length === 0 &&
+                    <div className="filter-status">
+                        <select name="status-filter" id="" onChange={(e) => setFilterStatus(e.target.value)}>
+                            <option value="" style={{ textAlign: 'center' }}>-- All --</option>
+                            {statusTask.map((item, index) => (
+                                <option key={index} value={item.id}>{item.status_name}-{item.description}</option>
+                            ))}
+                        </select>
+                    </div>
+                }
             </div>
         </>
     );
