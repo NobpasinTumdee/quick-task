@@ -190,7 +190,7 @@ const Finance = () => {
                             <p>{transaction.type === "income" ? "+" : "-"}{transaction.amount} ฿</p>
                             {/* <p>{transaction.description}</p> */}
                             <p style={{ opacity: 0.7 }}>{String(transaction.transaction_date).slice(0, 10)}</p>
-                            {/* <h3 onClick={() => deleteTransaction(String(transaction.id))}>delete</h3> */}
+                            <h3 onClick={() => deleteTransaction(String(transaction.id))}>delete</h3>
                         </div>
                     </div>
                 ))}

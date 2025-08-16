@@ -3,7 +3,7 @@ import { supabase } from "../supabase/supabaseClient";
 import type { Profile } from "../interface";
 import '../App.css'
 import './style/page.css'
-import Loader from "../component/loader";
+import Loader from "../component/Loader";
 
 const Me = () => {
     const [user, setUser] = useState<any>(null);
