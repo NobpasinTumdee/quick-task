@@ -11,3 +11,9 @@ npm install @supabase/supabase-js
 ```
 npm install react-dotenv
 ```
+```
+npm install aos
+```
+```
+npm install @types/aos
+```

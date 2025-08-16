@@ -10,6 +10,7 @@ const Task = () => {
     const [popup, setPopup] = useState(false);
     const [statusTask, setStatusTask] = useState<StatusTaskInterface[]>([]);
     const [filterStatus, setFilterStatus] = useState('');
+    const [loading, setLoading] = useState(true);
     const [taskForm, setTaskForm] = useState<TaskInterface>({
         task_name: '',
         task_description: '',
@@ -21,12 +22,12 @@ const Task = () => {
 
     useEffect(() => {
         handleSignup();
-        getStatusTask();
     }, []);
 
     useEffect(() => {
         if (user) {
             getTask();
+            getStatusTask();
         }
     }, [user]);
 
@@ -61,9 +62,11 @@ const Task = () => {
             }
             if (data) {
                 // console.table(data);
+                setLoading(false);
                 setTask(data);
             } else {
-                console.error('Task not found');
+                setTask([]);
+                setLoading(false);
             }
         } catch (error: any) {
             console.error('Error fetching task:', error.message);
@@ -84,7 +87,7 @@ const Task = () => {
             if (error) {
                 throw error;
             }
-            getTask();
+            await getTask();
         } catch (error: any) {
             console.error('Error inserting task:', error.message);
         }
@@ -149,7 +152,7 @@ const Task = () => {
     }
     // --------------------- get status task ---------------------
 
-    if (!user || task.length === 0 || statusTask.length === 0) {
+    if (!user || loading) {
         return (
             <>
                 <Loader />
