@@ -8,8 +8,8 @@ import Finance from './page/Finance/Finance';
 import Login from './page/Login';
 import ProtectedRoute from './component/ProtectedRoute';
 import Me from './page/Me';
-import Wallet from './page/Finance/wallet';
-import Categories from './page/Finance/categories';
+import Wallet from './page/Finance/Wallet';
+import Categories from './page/Finance/Categories';
 
 const router = createBrowserRouter([
   {
