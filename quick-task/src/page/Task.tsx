@@ -3,6 +3,7 @@ import { supabase } from "../supabase/supabaseClient"
 import type { StatusTaskInterface, TaskInterface } from "../interface";
 import './style/task.css'
 import Loader from "../component/Loader";
+import CalendarTask from "../component/CalendarTask";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
@@ -299,7 +300,7 @@ const Task = () => {
                         </tbody>
                     </table>
                 </div>
-                {statusTask.length === 0 &&
+                {statusTask.length > 0 &&
                     <div className="filter-status">
                         <select name="status-filter" id="" onChange={(e) => setFilterStatus(e.target.value)}>
                             <option value="" style={{ textAlign: 'center' }}>-- All --</option>
@@ -309,6 +310,9 @@ const Task = () => {
                         </select>
                     </div>
                 }
+                <div style={{ margin: '5% 5%' }}>
+                    <CalendarTask tasks={task} />
+                </div>
             </div>
         </>
     );

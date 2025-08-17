@@ -17,3 +17,9 @@ npm install aos
 ```
 npm install @types/aos
 ```
+```
+npm install react-big-calendar dayjs
+```
+```
+npm i --save-dev @types/react-big-calendar
+```
