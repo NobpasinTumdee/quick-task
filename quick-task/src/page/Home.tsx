@@ -4,6 +4,7 @@ import 'aos/dist/aos.css';
 import '../App.css'
 import './style/Home.css'
 import { useEffect } from 'react';
+import QuickTaskLogo from '../assets/QuickTaskLogo.png';
 
 const Home = () => {
     useEffect(() => { Aos.init({ duration: 1000, once: true, }); }, []);
@@ -14,7 +15,7 @@ const Home = () => {
                 <nav className="navigation">
                     <div className="nav-brand" data-aos="fade-down">
                         <div className="nav-logo">
-                            ✨
+                            <img src={QuickTaskLogo} width={30} height={30} alt="" />
                         </div>
                         <span className="nav-title">Quick Task</span>
                     </div>
