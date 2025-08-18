@@ -1,10 +1,15 @@
 :root {
-    --background-main: #181818;
+    --background-main: #F0F4F7;
     --background-input: #ffffff;
-    --text-main: #ffffff;
-    --border-line: #d8d8d8;
-    --background-modal: #222;
-    --background-profile: #474747;
+    --text-main: #1C1F28;
+    --text-secondary: #ffffff;
+    --border-line: #1C1F28;
+    --background-modal: #ffffff;
+    --background-profile: #d5d5d5;
+
+    --wallet-theme: #3AA48C;
+    --wallet-theme-secondary: #195EA1;
+    --wallet-income: #2da44e;
 }
 
 body {

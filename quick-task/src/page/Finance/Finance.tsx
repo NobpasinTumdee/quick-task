@@ -11,6 +11,7 @@ const Finance = () => {
     const [Transactions, setTransactions] = useState<TransactionInterface[]>([]);
     const [status, setStatus] = useState<TransactionStatusInterface[]>([]);
     const [popup, setPopup] = useState(false);
+    const [filterType, setFilterType] = useState('all');
     const [TransactionForm, setTransactionForm] = useState<TransactionInterface>({
         wallet_id: String(id),
         status_id: 0,
@@ -144,16 +145,26 @@ const Finance = () => {
     return (
         <>
             <div style={{ margin: '0 5%' }}>
-                <p>Welcome to Finance!</p>
+                <h2>Welcome to Finance!</h2>
                 <p style={{ opacity: 0.7, fontWeight: '100' }}>ID: {id}</p>
-                <p onClick={() => setPopup(!popup)}>{popup ? '- Close' : '+ Add'}</p>
+                <p style={{ textAlign: 'right' }} onClick={() => setPopup(!popup)}>{popup ? '- Close' : '+ Add'}</p>
             </div>
             <div className="balance" onClick={() => setPopup(!popup)}>
                 <p>Total Balance</p>
-                <h1>{calculateBalance()} ฿</h1>
+                <h1>฿ {calculateBalance()}</h1>
                 <div className="income-expense">
-                    <span>🟢 Income: {Transactions.filter((transaction) => transaction.type === "income").reduce((total, transaction) => total + Number(transaction.amount), 0)} ฿</span>
-                    <span>🔴 Expense: {Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)} ฿</span>
+                    <div><p>Income:</p><br />{Transactions.filter((transaction) => transaction.type === "income").reduce((total, transaction) => total + Number(transaction.amount), 0)} ฿</div>
+                    <div><p>Expense:</p><br />{Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)} ฿</div>
+                </div>
+            </div>
+            <div className="income-expense-summary">
+                <div className="income">
+                    <p>Income</p>
+                    <h1>฿ {Transactions.filter((transaction) => transaction.type === "income").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
+                </div>
+                <div className="expense">
+                    <p>Expense</p>
+                    <h1>฿ {Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
             </div>
             {popup &&
@@ -179,21 +190,35 @@ const Finance = () => {
                 </div>
             }
 
+            <div className="transaction-type">
+                <h2 onClick={() => setFilterType('all')}>all</h2>
+                <h2 onClick={() => setFilterType('income')}>income</h2>
+                <h2 onClick={() => setFilterType('expense')}>expense</h2>
+            </div>
+
             <div className="transactions">
-                {Transactions.map((transaction, index) => (
-                    <div key={index} className="transaction">
-                        <div className="transaction-status">
-                            <div style={{ backgroundColor: transaction.type === "income" ? "green" : "red" }} className="transaction-icon"></div>
-                            <p className="transaction-status-name">{transaction.transaction_statuses?.name}</p>
-                        </div>
-                        <div>
-                            <p>{transaction.type === "income" ? "+" : "-"}{transaction.amount} ฿</p>
-                            {/* <p>{transaction.description}</p> */}
-                            <p style={{ opacity: 0.7 }}>{String(transaction.transaction_date).slice(0, 10)}</p>
-                            <h3 onClick={() => deleteTransaction(String(transaction.id))}>delete</h3>
-                        </div>
-                    </div>
-                ))}
+                <div className="line-transactions">
+                    {Transactions.filter((transaction) => {
+                        if (filterType === 'all') return true;
+                        if (filterType === 'income') return transaction.type === 'income';
+                        if (filterType === 'expense') return transaction.type === 'expense';
+                    }).map((transaction, index) => (
+                        <>
+                            <div key={index} className="transaction">
+                                <div className="transaction-status">
+                                    <div style={{ backgroundColor: transaction.type === "income" ? "green" : "red" }} className="transaction-icon"></div>
+                                    <p className="transaction-status-name">{transaction.transaction_statuses?.name}</p>
+                                </div>
+                                <div>
+                                    <p>{transaction.type === "income" ? "+" : "-"}{transaction.amount} ฿</p>
+                                    {/* <p>{transaction.description}</p> */}
+                                    <p style={{ opacity: 0.7 }}>{String(transaction.transaction_date).slice(0, 10)}</p>
+                                    <h3 onClick={() => deleteTransaction(String(transaction.id))}>delete</h3>
+                                </div>
+                            </div>
+                        </>
+                    ))}
+                </div>
             </div>
         </>
     )

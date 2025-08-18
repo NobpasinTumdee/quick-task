@@ -1,26 +1,61 @@
 .balance {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    text-align: left;
     gap: 10px;
-    width: 90%;
-    margin: 0 5% 3%;
-    border-radius: 30px;
-    padding: 30px 0;
-    border: 2px solid #3AA48C;
-    background: #3AA48C;
-    background: radial-gradient(circle, #3aa48c 0%, var(--background-main) 65%);
+    width: 80%;
+    margin: 0 5% 1%;
+    border-radius: 10px;
+    padding: 30px 5%;
+    color: var(--text-secondary);
+    box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 2px 6px 2px;
     cursor: pointer;
+    background: linear-gradient(341deg, var(--wallet-theme-secondary) 0%, var(--wallet-theme) 80%);
+}
+
+.balance p {
+    font-size: 0.9rem;
+    font-weight: 200;
+    opacity: 0.8;
+    margin: 0;
 }
 
 .income-expense {
     display: flex;
+    justify-content: space-between;
     gap: 30px;
 }
 
+.income-expense p {
+    font-size: 0.9rem;
+    font-weight: 200;
+    opacity: 0.8;
+    margin: 0;
+}
 
+.income-expense-summary {
+    display: flex;
+    gap: 1%;
+    width: 90%;
+    margin: 0 5% 3%;
+    color: var(--text-secondary);
+    justify-content: space-between;
+    align-items: center;
+}
 
+.income {
+    background: linear-gradient(339deg, #a3dc5b 0%, #53a12c 100%);
+    width: 50%;
+    padding: 0 5%;
+    border-radius: 10px;
+    box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 2px 6px 2px;
+}
+
+.expense {
+    background: linear-gradient(339deg, #e94539 0%, #ac232f 100%);
+    width: 50%;
+    padding: 0 5%;
+    border-radius: 10px;
+    box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 2px 6px 2px;
+}
 
 
 
@@ -32,9 +67,9 @@
     gap: 10px;
     width: 90%;
     margin: 0 5% 3%;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 30px 0;
-    border: 2px solid #3AA48C;
+    border: 2px solid var(--wallet-theme);
 }
 
 .form-income-expense input {
@@ -65,9 +100,9 @@
 }
 
 .form-income-expense button {
-    background-color: #2da44e;
+    background-color: var(--wallet-income);
     color: var(--text-main);
-    border: 2px solid #2da44e;
+    border: 2px solid var(--wallet-income);
     padding: 10px;
     border-radius: 6px;
     font-size: 14px;
@@ -83,12 +118,40 @@
 
 
 
+.transaction-type {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 5% 1%;
+    height: 60px;
+}
 
+.transaction-type h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.transaction-type h2:hover {
+    opacity: 1;
+    border-bottom: 3px solid var(--wallet-theme);
+}
 
 
 .transactions {
+    width: 88%;
     margin: 0 5% 5%;
-    width: 90%;
+    padding: 0 1%;
+    border-radius: 10px;
+    background-color: var(--background-modal);
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.line-transactions {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -103,7 +166,7 @@
     align-items: center;
     padding: 10px 10%;
     background-color: var(--background-modal);
-    border-radius: 20px;
+    border-bottom: 2px solid #00000020;
 }
 
 .transaction-icon {
@@ -156,5 +219,14 @@
         display: flex;
         gap: 10px;
         width: 95%;
+    }
+
+    .balance {
+        width: 80%;
+        margin: 0 5% 3%;
+    }
+
+    .income-expense-summary {
+        gap: 3%;
     }
 }
