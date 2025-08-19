@@ -50,3 +50,12 @@ export type TransactionStatusInterface = {
     id?: string;
     name?: string;
 };
+
+
+export interface TodoItem {
+    id: string;
+    task: string;
+    time: string;
+    is_completed: boolean;
+    due_date: string;
+}
