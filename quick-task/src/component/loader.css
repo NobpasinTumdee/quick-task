@@ -1,14 +1,23 @@
+.container-group {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .container-loader {
-    position: fixed;
-    top: 35%;
-    left: 48%;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 10%;
 }
 
 .text-loader {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: 0;
+    left: 0;
     text-align: center;
 }
 
@@ -20,7 +29,7 @@
     display: block;
     -webkit-animation: turn 2.5s ease infinite;
     animation: turn 2.5s ease infinite;
-    box-shadow: var(--text-main) 0px 1px 15px 0px;
+    box-shadow: var(--background-modal) 0px 1px 15px 0px;
 }
 
 .top-loader {
