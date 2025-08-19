@@ -26,3 +26,6 @@ npm i --save-dev @types/react-big-calendar
 ```
 npm i antd
 ```
+```
+npm install --save-dev @types/date-fns
+```

@@ -2,7 +2,7 @@ import { createBrowserRouter, Link } from 'react-router-dom'
 import { RouterProvider } from 'react-router-dom';
 import Rootlayout from './layout/Layout';
 import Home from './page/Home';
-import Todo from './page/Todo';
+import Todo from './page/Todo/Todo';
 import Task from './page/Task';
 import Finance from './page/Finance/Finance';
 import Login from './page/Login';
