@@ -2,11 +2,12 @@
     position: fixed;
     bottom: 10px;
     width: 100vw;
-    height: 70px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
+    scale: 0.8;
 }
 
 .mobile-error {
@@ -16,10 +17,11 @@
 .nav-container ul {
     display: flex;
     width: auto;
-    background-color: #222;
+    background-color: var(--background-modal);
     border-radius: 20px;
     gap: 15px;
     padding: 0 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     transition: 0.2s ease-in-out;
 }
 
@@ -47,19 +49,19 @@
     display: block;
     line-height: 75px;
     font-size: 1.5em;
-    filter: invert(1);
+    filter: invert(0);
     text-align: center;
     transition: 0.2s;
 }
 
 .nav-container ul li.active a .icon-nav {
     transform: translateY(-32px) scale(1.2);
-    filter: invert(0);
+    filter: invert(1);
 }
 
 .nav-container ul li a .text-nav {
     position: absolute;
-    color: #fff;
+    color: var(--text-main);
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: 0.05em;
@@ -92,33 +94,28 @@
 }
 
 .nav-container ul li.active a .circle {
-    background: #fff;
+    background: var(--text-main);
     width: 50px;
     height: 50px;
     transform: translate(-10px, -27px);
 }
 
-@media screen and (max-width: 540px) {
-    .nav-container ul {
-        scale: 0.8;
-    }
-}
 
 @media screen and (max-width: 450px) {
     .nav-container ul {
-        scale: 0.75;
+        scale: 0.9;
     }
 }
 
 @media screen and (max-width: 400px) {
     .nav-container ul {
-        scale: 0.6;
+        scale: 0.8;
     }
 }
 
 @media screen and (max-width: 330px) {
     .nav-container ul {
-        scale: 0.5;
+        scale: 0.7;
     }
 }
 
