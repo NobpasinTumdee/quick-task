@@ -292,8 +292,16 @@ const Task = () => {
                                         <td>{String(item.start_date)}</td>
                                         <td>{String(item.end_date)}</td>
                                         <td>{item.status_task?.status_name}</td>
-                                        <td onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} className="Done-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Done'}</td>
-                                        <td onClick={() => DeleteTask(String(item.id))} className="remove-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Remove'}</td>
+                                        <td>
+                                            <p className="Done-task" onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                {uploading ? 'Wait...' : 'Done'}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p className="remove-task" onClick={() => DeleteTask(String(item.id))} style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                {uploading ? 'Wait...' : 'Remove'}
+                                            </p>
+                                        </td>
                                     </tr>
                                 ))
                             }
