@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { supabase } from "../../supabase/supabaseClient";
 import type { WalletInterface } from "../../interface";
 import Loader from "../../component/Loader";
+import '../style/Wallet.css'
 
 const Wallet = () => {
     const user_id = localStorage.getItem('user_id');
@@ -16,7 +17,7 @@ const Wallet = () => {
     useEffect(() => {
         fetchWallet();
     }, []);
-    
+
 
     const fetchWallet = async () => {
         try {
@@ -32,7 +33,7 @@ const Wallet = () => {
                 setLoading(false);
                 setWallet(wallets);
                 // console.table(wallets);
-            }else {
+            } else {
                 setLoading(false);
                 setWallet([]);
             }
@@ -70,19 +71,33 @@ const Wallet = () => {
     }
     return (
         <>
-            <h1>Wallet</h1>
-            <div>
-                <input type="text" onChange={(e) => setWalletForm({ ...WalletForm, name: e.target.value })} />
-                <button onClick={InsertWallet}>Insert</button>
-            </div>
-            <div>
-                {wallet.map((wallet, index) => (
-                    <div key={index}>
-                        <h2>{wallet.name}</h2>
-                        <p>Balance: {wallet.balance}</p>
-                        <Link to={`/finance/${wallet.id}`}>Details</Link>
-                    </div>
-                ))}
+            <div className="wallet-page-container">
+                <h1 className="wallet-header">💰 My Wallets</h1>
+                <p style={{textAlign:'center'}}>ยังไม่ได้ทำฟังก์ชั่นลบ นะค้าบบเดะจะรีบมาทำให้เน้อ</p>
+                <div className="wallet-form-container">
+                    <input
+                        type="text"
+                        className="wallet-input"
+                        onChange={(e) => setWalletForm({ ...WalletForm, name: e.target.value })}
+                        placeholder="Add a new wallet..."
+                    />
+                    <button className="wallet-button" onClick={InsertWallet}>
+                        Add Wallet
+                    </button>
+                </div>
+                <div className="wallet-list-grid">
+                    {wallet.map((wallet, index) => (
+                        <div key={index} className="wallet-card-item">
+                            <div>
+                                <h2 className="wallet-name">{wallet.name}</h2>
+                                <p className="wallet-balance">Balance: {wallet.balance || 0} Baht</p>
+                            </div>
+                            <Link to={`/finance/${wallet.id}`} className="wallet-link-details">
+                                View Details →
+                            </Link>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     )
