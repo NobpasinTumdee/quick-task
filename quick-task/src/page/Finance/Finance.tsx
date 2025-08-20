@@ -105,6 +105,7 @@ const Finance = () => {
                 alert("Transaction created.");
             }
             await fetchTransactions();
+            await insertBalance();
         } catch (error) {
             console.error("Error creating transaction:", error);
             setLazyLoading(false);
@@ -122,6 +123,7 @@ const Finance = () => {
                 console.error("Error deleting transaction:", error);
             }
             await fetchTransactions();
+            await insertBalance();
             setLazyLoading(false);
         } catch (error) {
             console.error("Error deleting transaction:", error);
@@ -142,6 +144,22 @@ const Finance = () => {
                 }
             });
             return balance;
+        }
+    }
+
+    const insertBalance = async () => {
+        const TotalBalance = calculateBalance();
+        try {
+            const { error } = await supabase
+                .from('wallets')
+                .update({ balance: TotalBalance })
+                .eq('id', id)
+                .select()
+            if (error) {
+                throw error;
+            }
+        } catch (error) {
+            console.error("Error updating balance:", error);
         }
     }
 
@@ -176,6 +194,7 @@ const Finance = () => {
                 alert("Transaction created.");
             }
             await fetchTransactions();
+            await insertBalance();
         } catch (error) {
             console.error("Error creating transaction:", error);
             setLazyLoading(false);
