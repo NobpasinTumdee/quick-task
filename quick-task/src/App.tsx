@@ -11,6 +11,7 @@ import Me from './page/Me';
 import Wallet from './page/Finance/Wallet';
 import Categories from './page/Finance/Categories';
 import FuzzyText from './component/PageNotFound';
+import Setting from './component/Setting';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: "todo-list", element: <ProtectedRoute><Todo /></ProtectedRoute> },
       { path: "me", element: <ProtectedRoute><Me /></ProtectedRoute> },
       { path: "login", element: <Login /> },
+      { path: "setting", element: <Setting /> },
     ]
   }
 ]);

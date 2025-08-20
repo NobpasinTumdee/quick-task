@@ -11,6 +11,19 @@
     --wallet-theme-secondary: #195EA1;
     --wallet-income: #2da44e;
 }
+[data-theme="Dark"] {
+    --background-main: #121212;
+    --background-input: #1E1E1E;
+    --text-main: #E2E2E2;
+    --text-secondary: #1E1E1E;
+    --border-line: #A4A4A4;
+    --background-modal: #1E1E1E;
+    --background-profile: #505050;
+
+    --wallet-theme: #3AA48C;
+    --wallet-theme-secondary: #195EA1;
+    --wallet-income: #2da44e;
+}
 
 body {
     margin: 0;
@@ -33,6 +46,6 @@ body {
 }
 
 *::selection {
-    background-color: var(--background-modal);
-    color: var(--text-main);
+    background-color: var(--text-main);
+    color: var(--background-main);
 }
