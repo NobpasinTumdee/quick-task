@@ -246,7 +246,7 @@
 .wallet-page-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background-main);
-    color: #333;
+    color: var(--text-main);
     padding: 20px;
     min-height: 100vh;
 }
@@ -254,7 +254,7 @@
 .wallet-header {
     text-align: center;
     margin-bottom: 30px;
-    color: #1a1a1a;
+    color: var(--text-main);
     font-size: 2.5rem;
     font-weight: 600;
 }
@@ -310,10 +310,11 @@
 }
 
 .wallet-card-item {
-    background-color: #fff;
+    background-color: var(--background-main);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px #00000014;
+    border: 2px solid var(--border-line);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -327,13 +328,14 @@
 
 .wallet-name {
     font-size: 1.5rem;
-    color: #333;
+    color: var(--text-main);
     margin: 0 0 10px;
 }
 
 .wallet-balance {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-main);
+    opacity: 0.8;
     margin-bottom: 20px;
 }
 
