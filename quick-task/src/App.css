@@ -1,11 +1,14 @@
 :root {
     --background-main: #F0F4F7;
-    --background-input: #ffffff;
+    --background-secondary: #ffffff;
+    --background-profile: #d5d5d5;
+    --background-modal: #ffffff;
+
+    --text-box: #ffffff;
+    --border-box: #1C1F28;
+
     --text-main: #1C1F28;
     --text-secondary: #ffffff;
-    --border-line: #1C1F28;
-    --background-modal: #ffffff;
-    --background-profile: #d5d5d5;
 
     --wallet-theme: #3AA48C;
     --wallet-theme-secondary: #195EA1;
@@ -13,17 +16,21 @@
 }
 [data-theme="Dark"] {
     --background-main: #121212;
-    --background-input: #1E1E1E;
-    --text-main: #E2E2E2;
-    --text-secondary: #1E1E1E;
-    --border-line: #A4A4A4;
-    --background-modal: #1E1E1E;
+    --background-secondary: #1E1E1E;
     --background-profile: #505050;
+    --background-modal: #1E1E1E;
+
+    --text-box: #121212;
+    --border-box: #505050;
+
+    --text-main: #ffffff;
+    --text-secondary: #1C1F28;
 
     --wallet-theme: #3AA48C;
     --wallet-theme-secondary: #195EA1;
     --wallet-income: #2da44e;
 }
+
 
 body {
     margin: 0;

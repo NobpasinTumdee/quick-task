@@ -314,7 +314,7 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px #00000014;
-    border: 2px solid var(--border-line);
+    border: 2px solid var(--border-box);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

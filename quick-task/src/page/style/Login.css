@@ -11,7 +11,7 @@
   background-color: var(--background-modal);
   padding: 24px;
   border-radius: 12px;
-  border: 1px solid var(--border-line);
+  border: 1px solid var(--border-box);
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   max-width: 350px;
   width: 100%;
@@ -35,8 +35,8 @@
 .auth-input {
   display: flex;
   align-items: center;
-  background-color: var(--background-input);
-  border: 1px solid var(--border-line);
+  background-color: var(--text-box);
+  border: 1px solid var(--border-box);
   border-radius: 8px;
   margin-bottom: 12px;
   padding: 8px;
