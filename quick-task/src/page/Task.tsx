@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabase/supabaseClient"
 import type { StatusTaskInterface, TaskInterface } from "../interface";
+import { message } from 'antd';
 import './style/task.css'
 import Loader from "../component/Loader";
 import CalendarTask from "../component/CalendarTask";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
-    // const [user, setUser] = useState<any>(null);
+    const [messageApi, contextHolder] = message.useMessage();
     const [task, setTask] = useState<TaskInterface[]>([]);
     const [popup, setPopup] = useState(false);
     const [statusTask, setStatusTask] = useState<StatusTaskInterface[]>([]);
@@ -78,6 +79,10 @@ const Task = () => {
                 throw error;
             } else {
                 setUploading(false);
+                messageApi.open({
+                    type: 'success',
+                    content: 'Task created.',
+                });
             }
             await getTask();
         } catch (error: any) {
@@ -102,6 +107,10 @@ const Task = () => {
                 throw error;
             } else {
                 setUploading(false);
+                messageApi.open({
+                    type: 'success',
+                    content: 'Task updated.',
+                });
             }
             await getTask();
         } catch (error: any) {
@@ -127,6 +136,10 @@ const Task = () => {
                 throw error;
             } else {
                 setUploading(false);
+                messageApi.open({
+                    type: 'success',
+                    content: 'Task deleted.',
+                });
             }
             await getTask();
         } catch (error: any) {
@@ -166,6 +179,7 @@ const Task = () => {
 
     return (
         <>
+            {contextHolder}
             <div className="header-task">
                 <h1>Task Manager</h1>
                 <p>{user_id}</p>

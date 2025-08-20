@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import { supabase } from "../../supabase/supabaseClient";
 import type { WalletInterface } from "../../interface";
+import { message } from 'antd';
 import Loader from "../../component/Loader";
 import '../style/Wallet.css'
 
 const Wallet = () => {
     const user_id = localStorage.getItem('user_id');
+    const [messageApi, contextHolder] = message.useMessage();
     const [wallet, setWallet] = useState<WalletInterface[]>([]);
     const [loading, setLoading] = useState(true);
     const [Wait, setWait] = useState(false);
@@ -60,6 +62,10 @@ const Wallet = () => {
             }
             setWait(false);
             await fetchWallet();
+            messageApi.open({
+                type: 'success',
+                content: 'Wallet created.',
+            });
         } catch (error: any) {
             console.error('Error inserting task:', error.message);
             setWait(false);
@@ -78,8 +84,11 @@ const Wallet = () => {
             } else {
                 await fetchWallet();
                 setWait(false);
+                messageApi.open({
+                    type: 'success',
+                    content: 'Wallet deleted.',
+                });
             }
-
         } catch (error: any) {
             console.error('Error deleting Wallet:', error.message);
             setWait(false);
@@ -95,6 +104,7 @@ const Wallet = () => {
     }
     return (
         <>
+            {contextHolder}
             <div className="wallet-page-container">
                 <h1 className="wallet-header">💰 My Wallets</h1>
                 <div className="wallet-form-container">

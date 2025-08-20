@@ -3,11 +3,12 @@ import { supabase } from "../../supabase/supabaseClient";
 import { useEffect, useState } from "react";
 import Loader from "../../component/Loader";
 import type { TransactionInterface, TransactionStatusInterface } from "../../interface";
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import '../style/Wallet.css'
 
 const Finance = () => {
     const { id } = useParams();
+    const [messageApi, contextHolder] = message.useMessage();
     const [loading, setLoading] = useState(true);
     const [lazyLoading, setLazyLoading] = useState(false);
     const [isModalIncome, setIsModalIncome] = useState(false);
@@ -102,7 +103,10 @@ const Finance = () => {
                     transaction_date: new Date(),
                 });
                 setLazyLoading(false);
-                alert("Transaction created.");
+                messageApi.open({
+                    type: 'success',
+                    content: 'Transaction created.',
+                });
             }
             await fetchTransactions();
             await insertBalance();
@@ -125,6 +129,10 @@ const Finance = () => {
             await fetchTransactions();
             await insertBalance();
             setLazyLoading(false);
+            messageApi.open({
+                type: 'success',
+                content: 'Transaction deleted.',
+            });
         } catch (error) {
             console.error("Error deleting transaction:", error);
             setLazyLoading(false);
@@ -191,7 +199,10 @@ const Finance = () => {
                     transaction_date: new Date(),
                 });
                 setLazyLoading(false);
-                alert("Transaction created.");
+                messageApi.open({
+                    type: 'success',
+                    content: 'Transaction created.',
+                });
             }
             await fetchTransactions();
             await insertBalance();
@@ -211,6 +222,7 @@ const Finance = () => {
     }
     return (
         <>
+            {contextHolder}
             <div style={{ margin: '0 5%' }}>
                 <h2>Welcome to Finance!</h2>
                 <p style={{ opacity: 0.7, fontWeight: '100' }}>ID: {id}</p>
