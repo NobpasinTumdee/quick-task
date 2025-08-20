@@ -1,28 +1,16 @@
+import { useTheme } from "./Theme";
 
 
 const Setting = () => {
-    const setWhite = () => {
-        document.querySelector("body")?.setAttribute("data-theme", "White");
-        localStorage.setItem("SelectedTheme", "White")
-    }
-    const setDark = () => {
-        document.querySelector("body")?.setAttribute("data-theme", "Dark");
-        localStorage.setItem("SelectedTheme", "Dark")
-    }
-    const SelectedTheme = localStorage.getItem("SelectedTheme");
-    if (SelectedTheme === "White") {
-        setWhite();
-    }else if (SelectedTheme === "Dark") {
-        setDark();
-    }
-
+    const { theme, setTheme } = useTheme();
     return (
         <>
             <div className="setting">
-                <div onClick={setWhite} className="theme">
+                <h1>Theme : {theme}</h1>
+                <div onClick={() => setTheme("White")} className="theme">
                     <p>While Theme</p>
                 </div>
-                <div onClick={setDark} className="theme">
+                <div onClick={() => setTheme("Dark")} className="theme">
                     <p>dark Theme</p>
                 </div>
             </div>
