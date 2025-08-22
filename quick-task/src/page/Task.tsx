@@ -6,6 +6,9 @@ import './style/task.css'
 import Loader from "../component/Loader";
 import CalendarTask from "../component/CalendarTask";
 
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
     const [messageApi, contextHolder] = message.useMessage();
@@ -30,6 +33,9 @@ const Task = () => {
             getStatusTask();
         }
     }, [user_id]);
+
+    useEffect(() => { Aos.init({ duration: 1000, once: true, }); }, []);
+
 
 
     const getTask = async () => {
@@ -237,44 +243,83 @@ const Task = () => {
 
                     <div className="task-column">
                         <h3>🟢 Plan ({task.filter(item => item.status_id === statusTask[0]?.id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[0]?.id).map((item, index) => (
-                            <div key={index} className="task-card">
-                                <div>
-                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
-                                    <p className="task-description">description: <br />{item.task_description}</p>
+                        <div className="task-column-container">
+                            {task.filter(item => item.status_id === statusTask[0]?.id).map((item, index) => (
+                                <div key={index} className="task-card" data-aos="fade-up" data-aos-duration={`${index + 1}00`}>
+                                    <div>
+                                        <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p className="task-description">description: <br />{item.task_description}</p>
+                                    </div>
+                                    {uploading ?
+                                        <span className="next-step-task" style={{ cursor: 'none', pointerEvents: 'none' }}>
+                                            <svg className="animation-clock" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--text-main)"><path d="M480-520q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z" /></svg>
+                                        </span>
+                                        :
+                                        <>
+                                            <span onClick={() => UpdateTask(String(item.id), String(statusTask[1]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--text-main)"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z" /></svg>
+                                            </span>
+                                        </>
+                                    }
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[1]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Next Step'}</span>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     <div className="task-column">
                         <h3>🟡 In Progress ({task.filter(item => item.status_id === statusTask[1]?.id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[1]?.id).map((item, index) => (
-                            <div key={index} className="task-card">
-                                <div>
-                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
-                                    <p className="task-description">{item.task_description}</p>
+                        <div className="task-column-container">
+                            {task.filter(item => item.status_id === statusTask[1]?.id).map((item, index) => (
+                                <div key={index} className="task-card" data-aos="fade-right" data-aos-duration={`${index + 1}00`}>
+                                    <div className="task-card-detail">
+                                        <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p className="task-description">description: <br />{item.task_description}</p>
+                                    </div>
+                                    {uploading ?
+                                        <span className="next-step-task" style={{ cursor: 'none', pointerEvents: 'none' }}>
+                                            <svg className="animation-clock" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--text-main)"><path d="M480-520q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z" /></svg>
+                                        </span>
+                                        :
+                                        <>
+                                            <span onClick={() => UpdateTask(String(item.id), String(statusTask[0]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--text-main)"><path d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z" /></svg>
+                                            </span>
+                                            <span onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--text-main)"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z" /></svg>
+                                            </span>
+                                        </>
+                                    }
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[2]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Next Step'}</span>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     <div className="task-column">
                         <h3>🟣 Complete ({task.filter(item => item.status_id === statusTask[2]?.id).length})</h3>
-                        {task.filter(item => item.status_id === statusTask[2]?.id).map((item, index) => (
-                            <div key={index} className="task-card">
-                                <div>
-                                    <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                    <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
-                                    <p className="task-description">{item.task_description}</p>
+                        <div className="task-column-container">
+                            {task.filter(item => item.status_id === statusTask[2]?.id).map((item, index) => (
+                                <div key={index} className="task-card" data-aos="fade-right" data-aos-duration={`${index + 1}00`}>
+                                    <div>
+                                        <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
+                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p className="task-description">description: <br />{item.task_description}</p>
+                                    </div>
+                                    {uploading ?
+                                        <span className="next-step-task" style={{ cursor: 'none', pointerEvents: 'none' }}>
+                                            <svg className="animation-clock" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--text-main)"><path d="M480-520q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z" /></svg>
+                                        </span>
+                                        :
+                                        <>
+                                            <span onClick={() => UpdateTask(String(item.id), String(statusTask[0]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="var(--text-main)"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z" /></svg>
+                                            </span>
+                                        </>
+                                    }
                                 </div>
-                                <span onClick={() => UpdateTask(String(item.id), String(statusTask[0]?.id))} className="next-step-task" style={{ cursor: uploading ? 'none' : 'pointer', pointerEvents: uploading ? 'none' : 'auto' }}>{uploading ? 'Wait...' : 'Work Again'}</span>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
 
