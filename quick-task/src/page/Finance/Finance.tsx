@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { supabase } from "../../supabase/supabaseClient";
 import { useEffect, useState } from "react";
-import Loader from "../../component/Loader";
+import Loader from "../../component/Loader/Loader";
 import type { TransactionInterface, TransactionStatusInterface } from "../../interface";
 import { Modal, message } from 'antd';
 import '../style/Wallet.css'
@@ -38,7 +38,7 @@ const Finance = () => {
                         id,
                         name
                     )`)
-                .eq('wallet_id', id);
+                .eq('wallet_id', id).order("transaction_date", { ascending: false });
             if (error) {
                 console.error("Error fetching transactions:", error);
                 return;

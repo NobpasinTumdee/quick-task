@@ -3,8 +3,8 @@ import { supabase } from "../supabase/supabaseClient";
 import type { Profile } from "../interface";
 import '../App.css'
 import './style/page.css'
-import Loader from "../component/Loader";
 import { Link } from "react-router-dom";
+import Loader4 from "../component/Loader/Loader4";
 
 const Me = () => {
     const [user, setUser] = useState<any>(null);
@@ -164,7 +164,7 @@ const Me = () => {
     if (!user) {
         return (
             <>
-                <Loader />
+                <Loader4 />
             </>
         );
     }
