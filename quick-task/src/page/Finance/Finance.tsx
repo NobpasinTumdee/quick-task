@@ -6,16 +6,25 @@ import type { TransactionInterface, TransactionStatusInterface } from "../../int
 import { Modal, message } from 'antd';
 import '../style/Wallet.css'
 
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+
 const Finance = () => {
     const { id } = useParams();
+
+    // Ui & loading
     const [messageApi, contextHolder] = message.useMessage();
     const [loading, setLoading] = useState(true);
     const [lazyLoading, setLazyLoading] = useState(false);
+
+    // Modals
     const [isModalIncome, setIsModalIncome] = useState(false);
     const [isModalExpense, setIsModalExpense] = useState(false);
+    const [popup, setPopup] = useState(false);
+
+    // data
     const [Transactions, setTransactions] = useState<TransactionInterface[]>([]);
     const [status, setStatus] = useState<TransactionStatusInterface[]>([]);
-    const [popup, setPopup] = useState(false);
     const [filterType, setFilterType] = useState('all');
     const [TransactionForm, setTransactionForm] = useState<TransactionInterface>({
         wallet_id: String(id),
@@ -28,6 +37,10 @@ const Finance = () => {
     useEffect(() => {
         fetchTransactions();
     }, []);
+    useEffect(() => { Aos.init({ duration: 500, once: true, }); }, []);
+    useEffect(() => {
+        insertBalance();
+    }, [Transactions])
     const fetchTransactions = async () => {
         try {
             const { data: transactions, error } = await supabase
@@ -83,6 +96,9 @@ const Finance = () => {
         if (TransactionForm.type === '' || TransactionForm.amount === 0 || TransactionForm.status_id === 0) {
             alert("Please select a type.");
             return;
+        } else if (Number(TransactionForm.amount) < 1) {
+            alert("Amount cannot be negative.");
+            return;
         }
         try {
             // console.table(TransactionForm);
@@ -96,7 +112,7 @@ const Finance = () => {
             } else {
                 setTransactionForm({
                     wallet_id: String(id),
-                    status_id: 1,
+                    status_id: 0,
                     amount: 0,
                     type: '',
                     description: '',
@@ -109,7 +125,6 @@ const Finance = () => {
                 });
             }
             await fetchTransactions();
-            await insertBalance();
         } catch (error) {
             console.error("Error creating transaction:", error);
             setLazyLoading(false);
@@ -127,7 +142,6 @@ const Finance = () => {
                 console.error("Error deleting transaction:", error);
             }
             await fetchTransactions();
-            await insertBalance();
             setLazyLoading(false);
             messageApi.open({
                 type: 'success',
@@ -177,6 +191,9 @@ const Finance = () => {
         if (newTransactionForm.type === '' || TransactionForm.amount === 0 || TransactionForm.status_id === 0) {
             alert("Please fill all the fields.");
             return;
+        } else if (Number(TransactionForm.amount) < 1) {
+            alert("Amount cannot be negative.");
+            return;
         }
         try {
             // console.table(newTransactionForm);
@@ -192,7 +209,7 @@ const Finance = () => {
             } else {
                 setTransactionForm({
                     wallet_id: String(id),
-                    status_id: 1,
+                    status_id: 0,
                     amount: 0,
                     type: '',
                     description: '',
@@ -205,7 +222,6 @@ const Finance = () => {
                 });
             }
             await fetchTransactions();
-            await insertBalance();
         } catch (error) {
             console.error("Error creating transaction:", error);
             setLazyLoading(false);
@@ -223,12 +239,12 @@ const Finance = () => {
     return (
         <>
             {contextHolder}
-            <div style={{ margin: '0 5%' }}>
+            <div style={{ margin: '0 5%' }} data-aos="fade-down">
                 <h2>Welcome to Finance!</h2>
                 <p style={{ opacity: 0.7, fontWeight: '100' }}>ID: {id}</p>
                 <p style={{ textAlign: 'right', cursor: 'pointer' }} onClick={() => setPopup(!popup)}>{popup ? '- Close' : '+ Add'}</p>
             </div>
-            <div className="balance" onClick={() => setPopup(!popup)}>
+            <div className="balance" onClick={() => setPopup(!popup)} data-aos="fade-down">
                 <p>Total Balance</p>
                 <h1>฿ {calculateBalance()}</h1>
                 <div className="income-expense">
@@ -237,11 +253,11 @@ const Finance = () => {
                 </div>
             </div>
             <div className="income-expense-summary">
-                <div className="income" onClick={() => setIsModalIncome(true)}>
+                <div className="income" onClick={() => setIsModalIncome(true)} data-aos="fade-up">
                     <p>Income</p>
                     <h1>฿ {Transactions.filter((transaction) => transaction.type === "income").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
-                <div className="expense" onClick={() => setIsModalExpense(true)}>
+                <div className="expense" onClick={() => setIsModalExpense(true)} data-aos="fade-up">
                     <p>Expense</p>
                     <h1>฿ {Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
@@ -249,7 +265,7 @@ const Finance = () => {
             {popup &&
                 <div className="form-income-expense">
                     <label htmlFor="amount">Amount</label>
-                    <input type="number" value={TransactionForm.amount} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
+                    <input type="number" min={0} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
                     <label htmlFor="amount">Description</label>
                     <input type="text" value={TransactionForm.description} onChange={(e) => setTransactionForm({ ...TransactionForm, description: e.target.value })} />
                     <div className="form-select">
@@ -269,13 +285,13 @@ const Finance = () => {
                 </div>
             }
 
-            <div className="transaction-type">
+            <div className="transaction-type" data-aos="fade-down">
                 <h2 onClick={() => setFilterType('all')}>all</h2>
                 <h2 onClick={() => setFilterType('income')}>income</h2>
                 <h2 onClick={() => setFilterType('expense')}>expense</h2>
             </div>
 
-            <div className="transactions">
+            <div className="transactions" data-aos="fade-up">
                 <div style={{ height: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <h2>Transactions</h2>
                 </div>
@@ -290,13 +306,27 @@ const Finance = () => {
                                 <div style={{ backgroundColor: transaction.type === "income" ? "green" : "red" }} className="transaction-icon"></div>
                                 <div>
                                     <p className="transaction-status-name">{transaction.transaction_statuses?.name}</p>
-                                    <p className="transaction-status-description">{transaction.description}</p>
+                                    <p className="transaction-status-description">{(transaction.description)?.slice(0, 15)}</p>
+                                    <p className="transaction-status-description">{new Date(transaction.transaction_date).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true, })} {new Date(transaction.transaction_date).toLocaleDateString("th-TH", { dateStyle: "short" })}</p>
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
                                 <div>
-                                    <p>{transaction.type === "income" ? "+" : "-"}{transaction.amount} ฿</p>
-                                    <p style={{ opacity: 0.7 }}>{String(transaction.transaction_date).slice(0, 10)}</p>
+                                    <p>
+                                        {transaction.type === "income" ?
+                                            <>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#2da44e"><path d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z" /></svg>
+                                                {" "}+
+                                            </>
+                                            :
+                                            <>
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#c53d3d"><path d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" /></svg>
+                                                {" "}-
+                                            </>
+                                        }
+                                        {transaction.amount} ฿
+                                    </p>
+                                    {/* <p style={{ opacity: 0.7 }}>{new Date(transaction.transaction_date).toLocaleDateString("th-TH", { dateStyle: "short" })}</p> */}
                                 </div>
                                 {lazyLoading ? (
                                     <svg className="animation-clock" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#8d8d8dff">
@@ -321,7 +351,7 @@ const Finance = () => {
             >
                 <div className="form-income-expense-modal income-line">
                     <label htmlFor="amount">Income</label>
-                    <input type="number" value={TransactionForm.amount} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
+                    <input type="number" min={0} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
                     <label htmlFor="amount">Description</label>
                     <input type="text" value={TransactionForm.description} onChange={(e) => setTransactionForm({ ...TransactionForm, description: e.target.value })} />
                     <select name="status" id="status" value={TransactionForm.status_id} onChange={(e) => setTransactionForm({ ...TransactionForm, status_id: Number(e.target.value) })}>
@@ -339,7 +369,7 @@ const Finance = () => {
             >
                 <div className="form-income-expense-modal expense-line">
                     <label htmlFor="amount">Expense</label>
-                    <input type="number" value={TransactionForm.amount} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
+                    <input type="number" min={0} onChange={(e) => setTransactionForm({ ...TransactionForm, amount: Number(e.target.value) })} />
                     <label htmlFor="amount">Description</label>
                     <input type="text" value={TransactionForm.description} onChange={(e) => setTransactionForm({ ...TransactionForm, description: e.target.value })} />
                     <select name="status" id="status" value={TransactionForm.status_id} onChange={(e) => setTransactionForm({ ...TransactionForm, status_id: Number(e.target.value) })}>
