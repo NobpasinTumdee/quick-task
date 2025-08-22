@@ -62,7 +62,7 @@
 .add-task-form input,
 .add-task-form select {
     background-color: var(--text-box);
-    color: #000;
+    color: var(--text-main);
     padding: 10px;
     border: 1px solid var(--border-box);
     border-radius: 6px;
@@ -86,7 +86,7 @@
 
 .add-task-form button {
     background-color: #2da44e;
-    color: var(--text-secondary);
+    color: #fff;
     border: none;
     padding: 10px;
     border-radius: 6px;
@@ -163,14 +163,14 @@
 
 .Done-task {
     background-color: #64348b;
-    color: var(--background-modal);
+    color: white;
     border-radius: 20px;
     cursor: pointer;
 }
 
 .remove-task {
     background-color: #c53d3d;
-    color: var(--background-modal);
+    color: white;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -193,6 +193,10 @@
     border: 1px solid var(--border-box);
     display: flex;
     flex-direction: column;
+    height: 350px;
+}
+
+.task-column-container {
     height: 350px;
     overflow-y: scroll;
 }
@@ -231,6 +235,11 @@
 .task-card:hover .task-description {
     display: block;
 }
+
+.task-card-detail {
+    width: 100%;
+}
+
 
 
 .next-step-task {
@@ -277,6 +286,11 @@
     .content-task {
         margin: 0 0 50%;
         width: 100%;
+    }
+
+    .menu-task {
+        width: 90%;
+        margin: 0 5%;
     }
 
     .table-task th {
