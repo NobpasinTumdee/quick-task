@@ -41,7 +41,7 @@ export type TransactionInterface = {
     amount?: number;
     description?: string;
     type?: string;
-    transaction_date?: Date;
+    transaction_date: Date;
 
     transaction_statuses?: TransactionStatusInterface;
 };
