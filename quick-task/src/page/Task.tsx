@@ -3,11 +3,11 @@ import { supabase } from "../supabase/supabaseClient"
 import type { StatusTaskInterface, TaskInterface } from "../interface";
 import { message } from 'antd';
 import './style/task.css'
-import Loader from "../component/Loader";
 import CalendarTask from "../component/CalendarTask";
 
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import Loader2 from "../component/Loader/Loader2";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
@@ -178,7 +178,7 @@ const Task = () => {
     if (!user_id || loading) {
         return (
             <>
-                <Loader />
+                <Loader2 />
             </>
         );
     }

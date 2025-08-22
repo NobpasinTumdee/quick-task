@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 import { supabase } from "../../supabase/supabaseClient";
 import type { WalletInterface } from "../../interface";
 import { message } from 'antd';
-import Loader from "../../component/Loader";
 import '../style/Wallet.css'
+import Loader3 from "../../component/Loader/Loader3";
 
 const Wallet = () => {
     const user_id = localStorage.getItem('user_id');
@@ -98,7 +98,7 @@ const Wallet = () => {
     if (loading) {
         return (
             <>
-                <Loader />
+                <Loader3 />
             </>
         );
     }
