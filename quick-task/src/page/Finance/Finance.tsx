@@ -6,6 +6,9 @@ import type { TransactionInterface, TransactionStatusInterface } from "../../int
 import { Modal, message } from 'antd';
 import '../style/Wallet.css'
 
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+
 const Finance = () => {
     const { id } = useParams();
 
@@ -34,6 +37,7 @@ const Finance = () => {
     useEffect(() => {
         fetchTransactions();
     }, []);
+    useEffect(() => { Aos.init({ duration: 500, once: true, }); }, []);
     useEffect(() => {
         insertBalance();
     }, [Transactions])
@@ -235,12 +239,12 @@ const Finance = () => {
     return (
         <>
             {contextHolder}
-            <div style={{ margin: '0 5%' }}>
+            <div style={{ margin: '0 5%' }} data-aos="fade-down">
                 <h2>Welcome to Finance!</h2>
                 <p style={{ opacity: 0.7, fontWeight: '100' }}>ID: {id}</p>
                 <p style={{ textAlign: 'right', cursor: 'pointer' }} onClick={() => setPopup(!popup)}>{popup ? '- Close' : '+ Add'}</p>
             </div>
-            <div className="balance" onClick={() => setPopup(!popup)}>
+            <div className="balance" onClick={() => setPopup(!popup)} data-aos="fade-down">
                 <p>Total Balance</p>
                 <h1>฿ {calculateBalance()}</h1>
                 <div className="income-expense">
@@ -249,11 +253,11 @@ const Finance = () => {
                 </div>
             </div>
             <div className="income-expense-summary">
-                <div className="income" onClick={() => setIsModalIncome(true)}>
+                <div className="income" onClick={() => setIsModalIncome(true)} data-aos="fade-up">
                     <p>Income</p>
                     <h1>฿ {Transactions.filter((transaction) => transaction.type === "income").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
-                <div className="expense" onClick={() => setIsModalExpense(true)}>
+                <div className="expense" onClick={() => setIsModalExpense(true)} data-aos="fade-up">
                     <p>Expense</p>
                     <h1>฿ {Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
@@ -281,13 +285,13 @@ const Finance = () => {
                 </div>
             }
 
-            <div className="transaction-type">
+            <div className="transaction-type" data-aos="fade-down">
                 <h2 onClick={() => setFilterType('all')}>all</h2>
                 <h2 onClick={() => setFilterType('income')}>income</h2>
                 <h2 onClick={() => setFilterType('expense')}>expense</h2>
             </div>
 
-            <div className="transactions">
+            <div className="transactions" data-aos="fade-up">
                 <div style={{ height: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <h2>Transactions</h2>
                 </div>
