@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabaseClient';
 import type { total_schedules } from '../../interface';
+import '../style/ScheduleTable.css'
 
 const Schedule = () => {
     const navigate = useNavigate();
@@ -35,16 +36,32 @@ const Schedule = () => {
     }
     return (
         <>
-            <div>
-                <h1>Schedule</h1>
-            </div>
-            <div>
-                {schedules.map((schedule) => (
-                    <div key={schedule.id}>
-                        <p>{schedule.name}</p>
-                        <button onClick={() => handNavigate(schedule.id)}>go to schedule</button>
+            <div className="schedule-container">
+                <header className="schedule-header">
+                    <h1>📚 ตารางเรียนของฉัน</h1>
+                    <p className="header-subtitle">เลือกดูตารางสอนตามเทอมที่ต้องการ</p>
+                </header>
+                <div className="schedule-list-grid">
+                    {schedules.map((schedule) => (
+                        <div
+                            key={schedule.id}
+                            className="schedule-card"
+                            onClick={() => handNavigate(schedule.id)}
+                        >
+                            <div className="card-content">
+                                <h2 className="card-title">เทอม {schedule.name}</h2>
+                                <p className="card-subtitle">ภาคการศึกษาที่ {schedule.name}</p>
+                                <span className="card-arrow">→</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {schedules.length === 0 && (
+                    <div className="no-schedules-found">
+                        <p>ไม่พบตารางเรียนในขณะนี้ 😔</p>
+                        <p>ลองสร้างตารางเรียนใหม่ได้เลย!</p>
                     </div>
-                ))}
+                )}
             </div>
         </>
     )

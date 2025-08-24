@@ -25,7 +25,7 @@ const ScheduleTable: React.FC = () => {
     const location = useLocation();
     const { state } = location;
     const { schedule_id } = state;
-    
+
     const [schedule, setSchedule] = useState<ScheduleEntry[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [newCourse, setNewCourse] = useState('');
@@ -156,37 +156,44 @@ const ScheduleTable: React.FC = () => {
     };
 
     return (
-        <div className="schedule-container">
-            <h1>ระบบจัดตารางสอน</h1>
-            <p>{schedule_id}</p>
-            <button className="add-button" onClick={() => setShowModal(true)}>
-                + เพิ่มวิชา
-            </button>
+        <div className="schedule-container-sc2">
+            <header className="schedule-header-sc2">
+                <div className="header-info-sc2">
+                    <h1 className="title-sc2">ตารางเรียน📚</h1>
+                    <p className="subtitle-sc2">รหัสตาราง: <span className="id-sc2">{schedule_id}</span></p>
+                </div>
+                <button className="add-button-sc2" onClick={() => setShowModal(true)}>
+                    + เพิ่มวิชา
+                </button>
+            </header>
 
-            <div className="table-wrapper">
-                <table className="schedule-table">
+            <div className="table-responsive-sc2">
+                <table className="schedule-table-sc2">
                     <thead>
                         <tr>
-                            <th>วัน / เวลา</th>
+                            <th className="header-cell-sc2">วัน / เวลา</th>
                             {timeSlots.slice(0, -1).map((time) => (
-                                <th key={time}>{getLabelFromTime(time)}</th>
+                                <th key={time} className="header-cell-sc2">{getLabelFromTime(time)}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {days.map((day) => (
                             <tr key={day}>
-                                <td>{day}</td>
+                                <td className="day-cell-sc2">{day}</td>
                                 {timeSlots.slice(0, -1).map((time) => {
                                     const course = getCourse(day, time);
                                     return (
-                                        <td key={time} className="table-cell">
+                                        <td key={time} className="table-cell-sc2">
                                             {course && (
-                                                <div className="course-entry">
-                                                    <span>{course.course}</span>
+                                                <div className="course-entry-sc2">
+                                                    <span className="course-name-sc2">{course.course}</span>
                                                     <button
-                                                        className="remove-button"
-                                                        onClick={() => handleRemoveCourse(course.id)}
+                                                        className="remove-button-sc2"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleRemoveCourse(course.id);
+                                                        }}
                                                         title="ลบวิชา"
                                                     >
                                                         🗑️
@@ -202,21 +209,29 @@ const ScheduleTable: React.FC = () => {
                 </table>
             </div>
 
+            {/* Modal */}
             {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h2>เพิ่มวิชาใหม่</h2>
-                        <div className="form-group">
-                            <label>ชื่อวิชา:</label>
+                <div className="modal-overlay-sc2">
+                    <div className="modal-content-sc2">
+                        <h2 className="modal-title-sc2">เพิ่มวิชาใหม่</h2>
+                        <div className="form-group-sc2">
+                            <label htmlFor="course-name-input-sc2" className="form-label-sc2">ชื่อวิชา:</label>
                             <input
+                                id="course-name-input-sc2"
                                 type="text"
                                 value={newCourse}
                                 onChange={(e) => setNewCourse(e.target.value)}
+                                className="form-input-sc2"
                             />
                         </div>
-                        <div className="form-group">
-                            <label>วัน:</label>
-                            <select value={newDay} onChange={(e) => setNewDay(e.target.value)}>
+                        <div className="form-group-sc2">
+                            <label htmlFor="day-select-sc2" className="form-label-sc2">วัน:</label>
+                            <select
+                                id="day-select-sc2"
+                                value={newDay}
+                                onChange={(e) => setNewDay(e.target.value)}
+                                className="form-select-sc2"
+                            >
                                 {days.map((day) => (
                                     <option key={day} value={day}>
                                         {day}
@@ -224,9 +239,14 @@ const ScheduleTable: React.FC = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="form-group">
-                            <label>เวลาเริ่มต้น:</label>
-                            <select value={newStartTime} onChange={(e) => setNewStartTime(e.target.value)}>
+                        <div className="form-group-sc2">
+                            <label htmlFor="start-time-select-sc2" className="form-label-sc2">เวลาเริ่มต้น:</label>
+                            <select
+                                id="start-time-select-sc2"
+                                value={newStartTime}
+                                onChange={(e) => setNewStartTime(e.target.value)}
+                                className="form-select-sc2"
+                            >
                                 {timeSlots.slice(0, -1).map((time) => (
                                     <option key={time} value={time}>
                                         {time}:00
@@ -234,9 +254,14 @@ const ScheduleTable: React.FC = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="form-group">
-                            <label>เวลาสิ้นสุด:</label>
-                            <select value={newEndTime} onChange={(e) => setNewEndTime(e.target.value)}>
+                        <div className="form-group-sc2">
+                            <label htmlFor="end-time-select-sc2" className="form-label-sc2">เวลาสิ้นสุด:</label>
+                            <select
+                                id="end-time-select-sc2"
+                                value={newEndTime}
+                                onChange={(e) => setNewEndTime(e.target.value)}
+                                className="form-select-sc2"
+                            >
                                 {timeSlots.slice(1).map((time) => (
                                     <option key={time} value={time}>
                                         {time}:00
@@ -244,9 +269,9 @@ const ScheduleTable: React.FC = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="modal-actions">
-                            <button onClick={handleAddCourse}>บันทึก</button>
-                            <button className="cancel" onClick={() => setShowModal(false)}>ยกเลิก</button>
+                        <div className="modal-actions-sc2">
+                            <button onClick={handleAddCourse} className="action-button-sc2 primary-sc2">บันทึก</button>
+                            <button onClick={() => setShowModal(false)} className="action-button-sc2 secondary-sc2">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
