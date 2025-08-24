@@ -1,0 +1,400 @@
+.schedule-container-sc2 {
+  max-width: 100vw;
+  margin: auto 0 15%;
+  padding: 1.5rem;
+  color: #333;
+}
+
+/* =========================
+   Header
+========================= */
+.schedule-header-sc2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.header-info-sc2 {
+  margin-bottom: 0.5rem;
+}
+
+.title-sc2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.subtitle-sc2 {
+  font-size: 1rem;
+  color: #555;
+}
+
+.id-sc2 {
+  font-weight: bold;
+  color: #0077cc;
+}
+
+.add-button-sc2 {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-button-sc2:hover {
+  background-color: #005fa3;
+}
+
+/* =========================
+   Table
+========================= */
+.table-responsive-sc2 {
+  overflow-x: auto;
+}
+
+.schedule-table-sc2 {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  /* ป้องกันการบีบจนอ่านไม่ได้ */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.schedule-table-sc2 th,
+.schedule-table-sc2 td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.header-cell-sc2 {
+  background-color: #0077cc;
+  color: white;
+  font-weight: bold;
+}
+
+.day-cell-sc2 {
+  font-weight: bold;
+  background-color: #f7f9fc;
+}
+
+.table-cell-sc2 {
+  min-width: 100px;
+  height: 70px;
+  position: relative;
+}
+
+/* =========================
+   Course Entry
+========================= */
+.course-entry-sc2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eaf4ff;
+  border-left: 4px solid #0077cc;
+  border-radius: 5px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.course-name-sc2 {
+  font-weight: 500;
+  color: #333;
+}
+
+.remove-button-sc2 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.remove-button-sc2:hover {
+  transform: scale(1.2);
+}
+
+/* =========================
+   Modal
+========================= */
+.modal-overlay-sc2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-sc2 {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title-sc2 {
+  margin-top: 0;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.form-group-sc2 {
+  margin-bottom: 1rem;
+}
+
+.form-label-sc2 {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.form-input-sc2,
+.form-select-sc2 {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modal-actions-sc2 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.action-button-sc2 {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.primary-sc2 {
+  background-color: #0077cc;
+  color: white;
+}
+
+.primary-sc2:hover {
+  background-color: #005fa3;
+}
+
+.secondary-sc2 {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.secondary-sc2:hover {
+  background-color: #e0e0e0;
+}
+
+/* =========================
+   Responsive Design
+========================= */
+@media (max-width: 768px) {
+  .schedule-header-sc2 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .schedule-table-sc2 th,
+  .schedule-table-sc2 td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .course-entry-sc2 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  .remove-button-sc2 {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-sc2 {
+    font-size: 1.4rem;
+  }
+
+  .add-button-sc2 {
+    width: 100%;
+  }
+
+  .schedule-table-sc2 {
+    min-width: 600px;
+    /* ยังต้อง scroll ได้ แต่ฟอนต์เล็กลง */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   Container & Layout
+========================= */
+.schedule-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+/* =========================
+   Header
+========================= */
+.schedule-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.schedule-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: #0077cc;
+}
+
+.header-subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* =========================
+   Schedule Grid
+========================= */
+.schedule-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* =========================
+   Card
+========================= */
+.schedule-card {
+  background: white;
+  border-radius: 12px;
+  border-left: 4px solid #005fa3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-left: 20px solid #005fa3;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.3rem;
+}
+
+.card-arrow {
+  font-size: 1.5rem;
+  color: #0077cc;
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.schedule-card:hover .card-arrow {
+  transform: translateX(4px);
+}
+
+/* =========================
+   Empty State
+========================= */
+.no-schedules-found {
+  margin-top: 2rem;
+  text-align: center;
+  color: #777;
+}
+
+.no-schedules-found p:first-child {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+  .schedule-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-arrow {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .schedule-container {
+    padding: 1rem;
+  }
+
+  .schedule-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem;
+  }
+}
