@@ -12,6 +12,8 @@ import Wallet from './page/Finance/Wallet';
 import Categories from './page/Finance/Categories';
 import FuzzyText from './component/PageNotFound';
 import Setting from './component/Setting';
+import Schedule from './page/Schedule/Schedule';
+import ScheduleTable from './page/Schedule/ScheduleTable';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
       { path: "finance/:id", element: <ProtectedRoute><Finance /></ProtectedRoute> },
       { path: "todo-list", element: <ProtectedRoute><Todo /></ProtectedRoute> },
       { path: "me", element: <ProtectedRoute><Me /></ProtectedRoute> },
+      { path: "schedules", element: <ProtectedRoute><Schedule /></ProtectedRoute> },
+      { path: "schedule", element: <ProtectedRoute><ScheduleTable /></ProtectedRoute> },
       { path: "login", element: <Login /> },
       { path: "setting", element: <Setting /> },
     ]

@@ -8,6 +8,7 @@ import CalendarTask from "../component/CalendarTask";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Loader2 from "../component/Loader/Loader2";
+import { Link } from "react-router-dom";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
@@ -379,6 +380,14 @@ const Task = () => {
                 }
                 <div style={{ margin: '5% 5%' }}>
                     <CalendarTask tasks={task} />
+                </div>
+
+                <div style={{ margin: '0% 50%' }}>
+                    <Link to={'/schedules'}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" fill="var(--text-main)">
+                            <path d="M320-80q-33 0-56.5-23.5T240-160v-480q0-33 23.5-56.5T320-720h480q33 0 56.5 23.5T880-640v480q0 33-23.5 56.5T800-80H320Zm0-80h200v-120H320v120Zm280 0h200v-120H600v120ZM80-240v-560q0-33 23.5-56.5T160-880h560v80H160v560H80Zm240-120h200v-120H320v120Zm280 0h200v-120H600v120ZM320-560h480v-80H320v80Z" />
+                        </svg>
+                    </Link>
                 </div>
             </div>
         </>

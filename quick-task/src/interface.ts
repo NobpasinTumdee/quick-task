@@ -59,3 +59,19 @@ export interface TodoItem {
     is_completed: boolean;
     due_date: string;
 }
+
+export interface total_schedules {
+    id: string;
+    user_id: string;
+    name: string;
+    created_at: Date;
+}
+
+export interface ScheduleEntry {
+    id: string;
+    schedule_id: string;
+    course: string;
+    day: string;
+    startTime: string;
+    endTime: string;
+}
