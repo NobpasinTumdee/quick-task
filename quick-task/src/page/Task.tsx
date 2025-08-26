@@ -244,9 +244,9 @@ const Task = () => {
 
                     <div className="task-column">
                         <h3>🟢 Plan ({task.filter(item => item.status_id === statusTask[0]?.id).length})</h3>
-                        <div className="task-column-container">
+                        <div className="task-column-container" data-aos="fade-up" data-aos-duration="200">
                             {task.filter(item => item.status_id === statusTask[0]?.id).map((item, index) => (
-                                <div key={index} className="task-card" data-aos="fade-up" data-aos-duration={`${index + 1}00`}>
+                                <div key={index} className="task-card">
                                     <div>
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                         <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
@@ -270,9 +270,9 @@ const Task = () => {
 
                     <div className="task-column">
                         <h3>🟡 In Progress ({task.filter(item => item.status_id === statusTask[1]?.id).length})</h3>
-                        <div className="task-column-container">
+                        <div className="task-column-container" data-aos="fade-up" data-aos-duration="300">
                             {task.filter(item => item.status_id === statusTask[1]?.id).map((item, index) => (
-                                <div key={index} className="task-card" data-aos="fade-right" data-aos-duration={`${index + 1}00`}>
+                                <div key={index} className="task-card">
                                     <div className="task-card-detail">
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                         <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
@@ -299,9 +299,9 @@ const Task = () => {
 
                     <div className="task-column">
                         <h3>🟣 Complete ({task.filter(item => item.status_id === statusTask[2]?.id).length})</h3>
-                        <div className="task-column-container">
+                        <div className="task-column-container" data-aos="fade-up" data-aos-duration="400">
                             {task.filter(item => item.status_id === statusTask[2]?.id).map((item, index) => (
-                                <div key={index} className="task-card" data-aos="fade-right" data-aos-duration={`${index + 1}00`}>
+                                <div key={index} className="task-card">
                                     <div>
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
                                         <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
