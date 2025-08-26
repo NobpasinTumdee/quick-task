@@ -52,6 +52,39 @@
 }
 
 /* =========================
+   input
+========================= */
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.schedule-form input {
+  width: 90%;
+  padding: 10px 5%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.schedule-form button {
+  background-color: #005fa3;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.schedule-form button:hover {
+  background-color: #0077cc;
+}
+
+/* =========================
    Table
 ========================= */
 .table-responsive-sc2 {
@@ -310,7 +343,6 @@
   border-left: 4px solid #005fa3;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.2rem;
-  cursor: pointer;
   transition: 0.3s ease;
 }
 
@@ -337,12 +369,16 @@
   font-size: 0.9rem;
   color: #777;
   margin-top: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .card-arrow {
   font-size: 1.5rem;
   color: #0077cc;
   margin-left: 0.5rem;
+  cursor: pointer;
   transition: transform 0.2s ease;
 }
 
