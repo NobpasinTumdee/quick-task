@@ -3,6 +3,7 @@ import '../style/ScheduleTable.css';
 import { supabase } from '../../supabase/supabaseClient';
 import type { ScheduleEntry } from '../../interface';
 import { useLocation } from 'react-router-dom';
+import Loader2 from '../../component/Loader/Loader2';
 
 
 const days = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
@@ -32,28 +33,34 @@ const ScheduleTable: React.FC = () => {
     const [newDay, setNewDay] = useState('จันทร์');
     const [newStartTime, setNewStartTime] = useState('06:00');
     const [newEndTime, setNewEndTime] = useState('07:00');
+    const [loading, setLoading] = useState(true);
 
 
     // ฟังก์ชันสำหรับดึงข้อมูลตารางเรียนจาก Supabase
     const fetchSchedules = async () => {
-        const { data, error } = await supabase
-            .from('schedules')
-            .select('id, course, day, start_time, end_time')
-            .order('created_at', { ascending: true })
-            .eq('schedule_id', schedule_id);
+        try {
+            const { data, error } = await supabase
+                .from('schedules')
+                .select('id, course, day, start_time, end_time')
+                .order('created_at', { ascending: true })
+                .eq('schedule_id', schedule_id);
 
-        if (error) {
-            console.error('Error fetching schedules:', error.message);
-        } else {
-            const formattedData = data.map((item: any) => ({
-                id: item.id,
-                schedule_id: item.schedule_id,
-                course: item.course,
-                day: item.day,
-                startTime: item.start_time,
-                endTime: item.end_time,
-            }));
-            setSchedule(formattedData);
+            if (error) {
+                throw error;
+            } else {
+                const formattedData = data.map((item: any) => ({
+                    id: item.id,
+                    schedule_id: item.schedule_id,
+                    course: item.course,
+                    day: item.day,
+                    startTime: item.start_time,
+                    endTime: item.end_time,
+                }));
+                setSchedule(formattedData);
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error('Error fetching schedules:', error);
         }
     };
 
@@ -154,6 +161,14 @@ const ScheduleTable: React.FC = () => {
                 timeSlots.indexOf(time) < timeSlots.indexOf(item.endTime)
         );
     };
+
+    if (!schedule_id || loading) {
+        return (
+            <>
+                <Loader2 />
+            </>
+        );
+    }
 
     return (
         <div className="schedule-container-sc2">
