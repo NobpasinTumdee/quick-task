@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { supabase } from "../../supabase/supabaseClient";
 import { useEffect, useState } from "react";
-import Loader from "../../component/Loader/Loader";
 import type { TransactionInterface, TransactionStatusInterface } from "../../interface";
 import { Modal, message } from 'antd';
 import '../style/Wallet.css'
 
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import QuickLoader from "../../component/Loader/quickLoader";
 
 const Finance = () => {
     const { id } = useParams();
@@ -232,7 +232,7 @@ const Finance = () => {
     if (loading) {
         return (
             <>
-                <Loader />
+                <QuickLoader />
             </>
         );
     }

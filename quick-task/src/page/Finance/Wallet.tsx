@@ -4,7 +4,7 @@ import { supabase } from "../../supabase/supabaseClient";
 import type { WalletInterface } from "../../interface";
 import { message } from 'antd';
 import '../style/Wallet.css'
-import Loader3 from "../../component/Loader/Loader3";
+import QuickLoader from "../../component/Loader/quickLoader";
 
 const Wallet = () => {
     const user_id = localStorage.getItem('user_id');
@@ -98,7 +98,7 @@ const Wallet = () => {
     if (loading) {
         return (
             <>
-                <Loader3 />
+                <QuickLoader />
             </>
         );
     }

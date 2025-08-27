@@ -7,8 +7,8 @@ import CalendarTask from "../component/CalendarTask";
 
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import Loader2 from "../component/Loader/Loader2";
 import { Link } from "react-router-dom";
+import QuickLoader from "../component/Loader/quickLoader";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
@@ -179,7 +179,7 @@ const Task = () => {
     if (!user_id || loading) {
         return (
             <>
-                <Loader2 />
+                <QuickLoader />
             </>
         );
     }

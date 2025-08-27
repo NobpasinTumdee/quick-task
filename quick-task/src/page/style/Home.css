@@ -107,6 +107,68 @@
     transition: 0.3s ease;
 }
 
+.quick-home {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.quick-home img {
+    position: absolute;
+    height: auto;
+    opacity: 0.9;
+}
+
+.quick-home1 {
+    bottom: 10%;
+    left: 10%;
+    animation-delay: 0s;
+    width: 30%;
+    rotate: -10deg;
+    animation: floatY 5s ease-in-out infinite alternate;
+}
+
+.quick-home2 {
+    bottom: 40%;
+    right: 20%;
+    animation-delay: 1s;
+    width: 15%;
+    rotate: 10deg;
+    animation: floatY 3s ease-in-out infinite alternate;
+}
+
+.quick-home3 {
+    top: 10%;
+    left: 10%;
+    animation-delay: 2s;
+    filter: blur(1px);
+    width: 20%;
+    rotate: 10deg;
+    animation: floatY 3s ease-in-out infinite alternate;
+}
+
+.quick-home4 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 3s;
+    filter: blur(1px);
+    width: 10%;
+    animation: floatY 2s ease-in-out infinite alternate;
+}
+
+@keyframes floatY {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-20px);
+    }
+}
+
+
 
 @media (max-width: 768px) {
     .nav-links {
@@ -136,4 +198,31 @@
         font-size: 0.7rem;
     }
 
+    .quick-home1 {
+        bottom: 20%;
+        left: 0%;
+        animation-delay: 0s;
+        width: 60%;
+    }
+
+    .quick-home2 {
+        bottom: 40%;
+        right: 10%;
+        animation-delay: 1s;
+        width: 30%;
+    }
+
+    .quick-home3 {
+        top: 20%;
+        left: 10%;
+        animation-delay: 2s;
+        width: 35%;
+    }
+
+    .quick-home4 {
+        top: 20%;
+        right: 20%;
+        animation-delay: 3s;
+        width: 15%;
+    }
 }
