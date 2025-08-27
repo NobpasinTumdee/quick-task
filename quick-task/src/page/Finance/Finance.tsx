@@ -7,7 +7,7 @@ import '../style/Wallet.css'
 
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import QuickLoader from "../../component/Loader/quickLoader";
+import QuickLoader from "../../component/Loader/Quick";
 
 const Finance = () => {
     const { id } = useParams();

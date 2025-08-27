@@ -8,7 +8,7 @@ import CalendarTask from "../component/CalendarTask";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from "react-router-dom";
-import QuickLoader from "../component/Loader/quickLoader";
+import QuickLoader from "../component/Loader/Quick";
 
 const Task = () => {
     const user_id = localStorage.getItem('user_id');
