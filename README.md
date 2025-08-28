@@ -29,3 +29,12 @@ npm i antd
 ```
 npm install --save-dev @types/date-fns
 ```
+```
+npm install chart.js react-chartjs-2
+```
+```
+npm install --save-dev @types/chart.js
+```
+```
+npm i chartjs-plugin-datalabels
+```

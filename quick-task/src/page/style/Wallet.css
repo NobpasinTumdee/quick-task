@@ -126,10 +126,11 @@
     width: 100%;
 }
 
-.income-line{
+.income-line {
     border-left: 5px solid #2da44e;
 }
-.expense-line{
+
+.expense-line {
     border-left: 5px solid #c53d3d;
 }
 
@@ -364,18 +365,23 @@
     .transactions {
         margin: 0 5% 20%;
     }
+
     .wallet-page-container {
         padding: 15px;
     }
+
     .wallet-header {
         font-size: 2rem;
     }
+
     .wallet-form-container {
         flex-direction: column;
     }
+
     .wallet-input {
         max-width: 100%;
     }
+
     .wallet-list-grid {
         grid-template-columns: 1fr;
     }
@@ -413,4 +419,47 @@
     .income-expense-summary {
         gap: 3%;
     }
+}
+
+
+
+
+
+
+.weekly-spending {
+    width: 90%;
+    margin: 0 5% 3%;
+    height: auto;
+    padding: 2% 0;
+    border-radius: 10px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px inset, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px inset;
+}
+
+.weekly-select {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 2px solid var(--wallet-theme);
+    background-color: var(--background-modal);
+    color: var(--text-main);
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.weekly-select option {
+    background-color: var(--background-modal);
+    color: var(--text-main);
+    border-radius: 5px;
+}
+
+.weekly-select:focus {
+    outline: none;
+    background-color: var(--background-modal);
+    border-color: var(--wallet-income);
+    box-shadow: 0 0 15px var(--wallet-income);
 }

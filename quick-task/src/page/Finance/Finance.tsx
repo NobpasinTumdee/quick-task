@@ -8,6 +8,7 @@ import '../style/Wallet.css'
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import QuickLoader from "../../component/Loader/Quick";
+import WeeklySpendingChart from "./ChartFinance";
 
 const Finance = () => {
     const { id } = useParams();
@@ -21,10 +22,12 @@ const Finance = () => {
     const [isModalIncome, setIsModalIncome] = useState(false);
     const [isModalExpense, setIsModalExpense] = useState(false);
     const [popup, setPopup] = useState(false);
+    const [popup2, setPopup2] = useState(false);
 
     // data
     const [Transactions, setTransactions] = useState<TransactionInterface[]>([]);
     const [status, setStatus] = useState<TransactionStatusInterface[]>([]);
+    const [weeklyData, setWeeklyData] = useState(4);
     const [filterType, setFilterType] = useState('all');
     const [TransactionForm, setTransactionForm] = useState<TransactionInterface>({
         wallet_id: String(id),
@@ -242,7 +245,6 @@ const Finance = () => {
             <div style={{ margin: '0 5%' }} data-aos="fade-down">
                 <h2>Welcome to Finance!</h2>
                 <p style={{ opacity: 0.7, fontWeight: '100' }}>ID: {id}</p>
-                <p style={{ textAlign: 'right', cursor: 'pointer' }} onClick={() => setPopup(!popup)}>{popup ? '- Close' : '+ Add'}</p>
             </div>
             <div className="balance" onClick={() => setPopup(!popup)} data-aos="fade-down">
                 <p>Total Balance</p>
@@ -261,6 +263,22 @@ const Finance = () => {
                     <p>Expense</p>
                     <h1>฿ {Transactions.filter((transaction) => transaction.type === "expense").reduce((total, transaction) => total + Number(transaction.amount), 0)}</h1>
                 </div>
+            </div>
+            <div style={{ margin: '0 5% 1%', display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--border-box)" onClick={() => setPopup2(!popup2)} style={{ cursor: 'pointer' }} data-aos="zoom-in">
+                    {popup2 ?
+                        <path d="M73-889 889-73l-57 57-104-104H200q-33 0-56.5-23.5T120-200v-528L16-832l57-57Zm287 447L200-282v82h448L544-304l-22 24-162-162ZM200-648v252l126-126-126-126Zm36-192h524q33 0 56.5 23.5T840-760v524l-80-80v-234L650-426l-57-57 167-187v-90H316l-80-80Zm357 357Zm-158 70ZM326-522Zm34 80Zm176-98Z" />
+                        :
+                        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h360v80H200v560h560v-360h80v360q0 33-23.5 56.5T760-120H200Zm80-160h80v-280h-80v280Zm160 0h80v-400h-80v400Zm160 0h80v-160h-80v160Zm80-320v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80ZM480-480Z" />
+                    }
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--border-box)" onClick={() => setPopup(!popup)} style={{ cursor: 'pointer' }} data-aos="zoom-in">
+                    {popup ?
+                        <path d="m177-120-57-57 184-183H200v-80h240v240h-80v-104L177-120Zm343-400v-240h80v104l183-184 57 57-184 183h104v80H520Z" />
+                        :
+                        <path d="M120-120v-320h80v184l504-504H520v-80h320v320h-80v-184L256-200h184v80H120Z" />
+                    }
+                </svg>
             </div>
             {popup &&
                 <div className="form-income-expense">
@@ -282,6 +300,19 @@ const Finance = () => {
                         </select>
                     </div>
                     <button onClick={createTransaction}>Create Transaction</button>
+                </div>
+            }
+
+            {popup2 &&
+                <div className="weekly-spending" data-aos="fade-up">
+                    <WeeklySpendingChart transactions={Transactions} weeksToShow={weeklyData} />
+                    <select name="weekly" id="weekly" value={weeklyData} onChange={(e) => setWeeklyData(Number(e.target.value))} className="weekly-select">
+                        <option value={4}>select week</option>
+                        <option value={2}>2 Week</option>
+                        <option value={3}>3 Week</option>
+                        <option value={4}>4 Week</option>
+                        <option value={8}>8 Week</option>
+                    </select>
                 </div>
             }
 
