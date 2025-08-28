@@ -1,7 +1,7 @@
 /* Main Container */
 .hero-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--background-main) 0%, var(--background-modal) 50%, var(--background-main) 100%);
+    background: linear-gradient(135deg, var(--background-main) 0%, var(--background-modal) 50%, var(--text-main) 100%);
     position: relative;
     overflow: hidden;
     /* color: var(--text-secondary); */
