@@ -9,9 +9,13 @@ const user_id = localStorage.getItem('user_id');
 // CalendarBar Component
 const CalendarBar: React.FC<{ selectedDate: Date; onDateChange: (date: Date) => void }> = ({ selectedDate, onDateChange }) => {
     const dates = [
+        subDays(selectedDate, 3),
+        subDays(selectedDate, 2),
         subDays(selectedDate, 1),
         selectedDate,
         addDays(selectedDate, 1),
+        addDays(selectedDate, 2),
+        addDays(selectedDate, 3),
     ];
 
     return (
@@ -96,3 +100,4 @@ const Todo = () => {
 }
 
 export default Todo
+
