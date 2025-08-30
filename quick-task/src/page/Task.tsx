@@ -249,7 +249,19 @@ const Task = () => {
                                 <div key={index} className="task-card">
                                     <div>
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p style={{ margin: '0' }}>
+                                            {new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                            {" - "}to{" - "}
+                                            {new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                        </p>
                                         <p className="task-description">description: <br />{item.task_description}</p>
                                     </div>
                                     {uploading ?
@@ -275,7 +287,19 @@ const Task = () => {
                                 <div key={index} className="task-card">
                                     <div className="task-card-detail">
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p style={{ margin: '0' }}>
+                                            {new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                            {" - "}to{" - "}
+                                            {new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                        </p>
                                         <p className="task-description">description: <br />{item.task_description}</p>
                                     </div>
                                     {uploading ?
@@ -304,7 +328,19 @@ const Task = () => {
                                 <div key={index} className="task-card">
                                     <div>
                                         <p style={{ margin: '0' }}>{item.task_name} ({String(item.start_date).slice(0, 4)})</p>
-                                        <p style={{ margin: '0' }}>{String(item.start_date).slice(5, 10)} to {String(item.end_date).slice(5, 10)}</p>
+                                        <p style={{ margin: '0' }}>
+                                            {new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.start_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                            {" - "}to{" - "}
+                                            {new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                                'Today'
+                                                :
+                                                new Date(item.end_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                            }
+                                        </p>
                                         <p className="task-description">description: <br />{item.task_description}</p>
                                     </div>
                                     {uploading ?

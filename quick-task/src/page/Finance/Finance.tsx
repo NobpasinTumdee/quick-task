@@ -338,7 +338,13 @@ const Finance = () => {
                                 <div>
                                     <p className="transaction-status-name">{transaction.transaction_statuses?.name}</p>
                                     <p className="transaction-status-description">{(transaction.description)?.slice(0, 15)}</p>
-                                    <p className="transaction-status-description">{new Date(transaction.transaction_date).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true, })} {new Date(transaction.transaction_date).toLocaleDateString("th-TH", { dateStyle: "short" })}</p>
+                                    <p className="transaction-status-description">
+                                        {new Date(transaction.transaction_date).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true, })} -
+                                        {new Date(transaction.transaction_date).toLocaleDateString("th-TH", { dateStyle: "short" }) === new Date().toLocaleDateString("th-TH", { dateStyle: "short" }) ?
+                                            "Today" :
+                                            new Date(transaction.transaction_date).toLocaleDateString("th-TH", { dateStyle: "short" })
+                                        }
+                                    </p>
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>

@@ -12,8 +12,8 @@ export type TaskInterface = {
     id?: string;
     task_name?: string;
     task_description?: string;
-    start_date?: Date;
-    end_date?: Date;
+    start_date: Date;
+    end_date: Date;
     user_id?: string;
     status_id?: string;
 
