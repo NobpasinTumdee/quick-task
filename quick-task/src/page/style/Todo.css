@@ -1,15 +1,16 @@
 .app-container {
-  background-color: #fff;
+  background-color: var(--background-secondary);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
+  height: 100vh;
   padding: 24px;
   box-sizing: border-box;
 }
 
 .app-title {
   text-align: center;
-  color: #2c3e50;
+  color: var(--todo-border);
   margin-bottom: 24px;
 }
 
@@ -17,10 +18,11 @@
 .calendar-bar {
   display: flex;
   justify-content: space-around;
-  background-color: #ecf0f1;
+  background-color: #FCE4EC;
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 24px;
+  overflow-x: scroll;
 }
 
 .date-tab {
@@ -34,14 +36,14 @@
 }
 
 .date-tab:hover {
-  background-color: #dfe6e9;
+  background-color: var(--todo-hover);
   transform: translateY(-2px);
 }
 
 .date-tab.active {
-  background-color: #3498db;
+  background-color: var(--todo-active);
   color: #fff;
-  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 2px 5px var(--todo-border);
   transform: translateY(-2px);
 }
 
@@ -72,13 +74,14 @@
 }
 
 .todo-item {
-  background-color: #f8f9fa;
-  border-left: 4px solid #3498db;
+  background-color: var(--todo-hover);
+  border-left: 4px solid var(--todo-active);
   padding: 16px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 12px;
+  justify-content: space-between;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -102,6 +105,7 @@
 }
 
 .todo-task {
+  margin-left: 8px;
   flex-grow: 1;
   color: #555;
   font-size: 16px;
@@ -110,4 +114,51 @@
 .todo-item.completed .todo-task {
   text-decoration: line-through;
   color: #7f8c8d;
+}
+
+.add-todo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.add-todo input {
+  flex-grow: 1;
+  padding: 10px 12px;
+  border-left: 4px solid var(--todo-active);
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-todo select {
+  padding: 10px 12px;
+  border-left: 4px solid var(--todo-active);
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-todo svg {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add-todo svg:hover {
+  transform: rotate(180deg) scale(1.2);
+}
+
+
+@media (max-width: 768px) {
+  .add-todo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-todo svg {
+    align-self: center;
+  }
 }

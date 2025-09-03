@@ -13,6 +13,10 @@
     --wallet-theme: #3AA48C;
     --wallet-theme-secondary: #195EA1;
     --wallet-income: #2da44e;
+
+    --todo-active: #DE5D83;
+    --todo-border: #AA4064;
+    --todo-hover: #f1bacb;
 }
 
 [data-theme="Dark"] {
@@ -30,6 +34,10 @@
     --wallet-theme: #3AA48C;
     --wallet-theme-secondary: #195EA1;
     --wallet-income: #2da44e;
+
+    --todo-active: #DE5D83;
+    --todo-border: #AA4064;
+    --todo-hover: #f1bacb;
 }
 
 
